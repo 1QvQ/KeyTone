@@ -1,26 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Silkscreen:wght@400;700&family=VT323&display=swap");
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #fafafa;
+  --foreground: #121212;
+  --card: #ffffff;
+  --card-foreground: #121212;
+  --popover: #ffffff;
+  --popover-foreground: #121212;
+  --primary: #121212;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #121212;
+  --muted: #e4e4e7;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #121212;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #121212;
+  --input: #e4e4e7;
+  --ring: #121212;
+  --radius: 0px;
+  /* Sharp corners for retro/geek look! */
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Share Tech Mono', monospace;
+  min-height: 100vh;
+}
+
+/* Typography styles */
+.font-pixel {
+  font-family: 'Silkscreen', monospace;
+}
+
+.font-terminal {
+  font-family: 'VT323', monospace;
+  letter-spacing: 0.05em;
+}
+
+.font-geek {
+  font-family: 'Share Tech Mono', monospace;
+}
+
+/* Neo-brutalist / Geek Card */
+.geek-card {
+  background-color: #ffffff;
+  border: 2px solid #121212;
+  box-shadow: 4px 4px 0px 0px #121212;
+  transition: all 0.15s ease;
+  border-radius: 0px;
+}
+
+.geek-card-hover:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px 0px #121212;
+}
+
+/* Geek Buttons */
+.geek-btn {
+  background-color: #121212;
+  color: #ffffff;
+  border: 2px solid #121212;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  box-shadow: 3px 3px 0px 0px #000000;
+  transition: all 0.1s ease;
+  border-radius: 0px;
+  cursor: pointer;
+}
+
+.geek-btn:hover {
+  background-color: #262626;
+}
+
+.geek-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px #000000;
+}
+
+.geek-btn-secondary {
+  background-color: #ffffff;
+  color: #121212;
+  border: 2px solid #121212;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  box-shadow: 3px 3px 0px 0px #121212;
+  transition: all 0.1s ease;
+  border-radius: 0px;
+  cursor: pointer;
+}
+
+.geek-btn-secondary:hover {
+  background-color: #f4f4f5;
+}
+
+.geek-btn-secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px #121212;
+}
+
+.geek-btn-danger {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 2px solid #b91c1c;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  box-shadow: 3px 3px 0px 0px #b91c1c;
+  transition: all 0.1s ease;
+  border-radius: 0px;
+  cursor: pointer;
+}
+
+.geek-btn-danger:hover {
+  background-color: #fecaca;
+}
+
+.geek-btn-danger:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px #b91c1c;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f4f5;
+  border-left: 2px solid #121212;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #121212;
+  border: 1px solid #f4f4f5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Animations */
+@keyframes terminalCursor {
+
+  from,
+  to {
+    border-color: transparent
+  }
+
+  50% {
+    border-color: #121212;
+  }
+}
+
+.terminal-cursor {
+  border-right: 2px solid #121212;
+  animation: terminalCursor 0.75s step-end infinite;
 }
