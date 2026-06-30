@@ -79,8 +79,11 @@ jobs:
 
       - run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Copy pulled environment variables to frontend directory
-        run: cp .vercel/.env.production.local frontend/.env.production.local
+      - name: Load pulled environment variables into GITHUB_ENV
+        run: |
+          if [ -f .vercel/.env.production.local ]; then
+            cat .vercel/.env.production.local >> $GITHUB_ENV
+          fi
 
       - run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
