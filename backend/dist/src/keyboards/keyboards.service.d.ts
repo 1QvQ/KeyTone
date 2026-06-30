@@ -33,28 +33,28 @@ export declare class KeyboardsService {
             keycaps: {
                 id: string;
                 brand: string;
-                setup_id: string;
                 profile: string;
                 material: string;
+                setup_id: string;
             }[];
             switches: {
                 id: string;
                 brand: string;
-                setup_id: string;
                 model: string;
                 lubed: boolean;
                 filmed: boolean;
                 spring: string | null;
+                setup_id: string;
             }[];
             plates: {
                 id: string;
-                setup_id: string;
                 material: string;
+                setup_id: string;
             }[];
             foams: {
                 id: string;
-                setup_id: string;
                 type: string;
+                setup_id: string;
             }[];
             audio_files: {
                 id: string;
@@ -77,8 +77,8 @@ export declare class KeyboardsService {
                     tag: string;
                 };
             } & {
-                setup_id: string;
                 tag_id: string;
+                setup_id: string;
             })[];
         } & {
             id: string;

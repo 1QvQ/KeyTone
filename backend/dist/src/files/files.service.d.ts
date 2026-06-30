@@ -2,8 +2,9 @@ import { PrismaService } from '../prisma/prisma.service';
 export declare class FilesService {
     private prisma;
     private readonly uploadDir;
+    private containerClient;
+    private isAzure;
     constructor(prisma: PrismaService);
-    private ensureDirs;
     saveImage(setupId: string, file: Express.Multer.File, caption?: string): Promise<{
         id: string;
         image_url: string;
