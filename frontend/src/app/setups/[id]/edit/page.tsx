@@ -65,45 +65,47 @@ export default function EditSetupPage() {
 
   useEffect(() => {
     if (setup && !initialized) {
-      setSetupName(setup.name || '');
-      setDescription(setup.description || '');
-      setFavourite(setup.favourite || false);
-      setNotes(setup.notes || '');
+      setTimeout(() => {
+        setInitialized(true);
+        setSetupName(setup.name || '');
+        setDescription(setup.description || '');
+        setFavourite(setup.favourite || false);
+        setNotes(setup.notes || '');
 
-      const sw = setup.switches?.[0];
-      if (sw) {
-        setSwitchBrand(sw.brand || '');
-        setSwitchModel(sw.model || '');
-        setSwitchLubed(sw.lubed || false);
-        setSwitchFilmed(sw.filmed || false);
-        setSwitchSpring(sw.spring || '');
-      }
+        const sw = setup.switches?.[0];
+        if (sw) {
+          setSwitchBrand(sw.brand || '');
+          setSwitchModel(sw.model || '');
+          setSwitchLubed(sw.lubed || false);
+          setSwitchFilmed(sw.filmed || false);
+          setSwitchSpring(sw.spring || '');
+        }
 
-      const kc = setup.keycaps?.[0];
-      if (kc) {
-        setKeycapBrand(kc.brand || '');
-        setKeycapProfile(kc.profile || 'Cherry');
-        setKeycapMaterial(kc.material || 'PBT');
-      }
+        const kc = setup.keycaps?.[0];
+        if (kc) {
+          setKeycapBrand(kc.brand || '');
+          setKeycapProfile(kc.profile || 'Cherry');
+          setKeycapMaterial(kc.material || 'PBT');
+        }
 
-      const pl = setup.plates?.[0];
-      if (pl) {
-        setPlateMaterial(pl.material || 'FR4');
-      }
+        const pl = setup.plates?.[0];
+        if (pl) {
+          setPlateMaterial(pl.material || 'FR4');
+        }
 
-      if (setup.foams) {
-        setSelectedFoams(setup.foams.map((f: any) => f.type));
-      }
+        if (setup.foams) {
+          setSelectedFoams(setup.foams.map((f: any) => f.type));
+        }
 
-      if (setup.sound_tags) {
-        setSelectedTags(setup.sound_tags.map((st: any) => {
-          const t = st.tag?.tag || '';
-          return t.charAt(0).toUpperCase() + t.slice(1);
-        }));
-      }
+        if (setup.sound_tags) {
+          setSelectedTags(setup.sound_tags.map((st: any) => {
+            const t = st.tag?.tag || '';
+            return t.charAt(0).toUpperCase() + t.slice(1);
+          }));
+        }
 
-      setTypingFeel(setup.typing_feel ?? 5);
-      setInitialized(true);
+        setTypingFeel(setup.typing_feel ?? 5);
+      }, 0);
     }
   }, [setup, initialized]);
 
