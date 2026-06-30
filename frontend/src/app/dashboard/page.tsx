@@ -162,19 +162,18 @@ export default function DashboardPage() {
 
             {keyboards && keyboards.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {keyboards.map((kb: unknown) => {
-                  const k = kb as Record<string, unknown>;
+                {keyboards.map((k: unknown) => {
+                  const kb = k as Record<string, any>;
                   return (
                   <div
-                    key={k.id as string}
+                    key={kb.id as string}
                     className="geek-card flex flex-col justify-between group shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                   >
-                    {/* Keyboard Visual Card */}
                     <div className="h-36 bg-slate-50 flex items-center justify-center p-4 border-b-2 border-slate-900 relative">
-                      {k.image_url ? (
+                      {kb.image_url ? (
                         <img
-                          src={resolveUrl(k.image_url as string)}
-                          alt={k.name as string}
+                          src={resolveUrl(kb.image_url as string)}
+                          alt={kb.name as string}
                           className="w-full h-full object-cover border-2 border-slate-900"
                         />
                       ) : (
@@ -183,34 +182,34 @@ export default function DashboardPage() {
                             <KeyboardIcon className="w-4.5 h-4.5 text-slate-900" />
                           </div>
                           <span className="text-[10px] text-gray-500 font-bold tracking-widest uppercase mt-1">
-                            {k.layout as string} Layout
+                            {kb.layout} Layout
                           </span>
                         </div>
                       )}
                       <div className="absolute top-3 right-3 px-2 py-0.5 border-2 border-slate-900 bg-white text-[9px] text-slate-900 font-bold uppercase tracking-wider shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)]">
-                        {k.layout as string}
+                        {kb.layout}
                       </div>
                     </div>
 
                     <div className="p-5 flex-1 flex flex-col justify-between gap-4 bg-white">
                       <div>
                         <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-0.5">
-                          {k.brand as string}
+                          {kb.brand}
                         </span>
                         <h3 className="text-sm font-bold text-slate-900 uppercase font-pixel tracking-wider leading-tight">
-                          {k.name as string}
+                          {kb.name}
                         </h3>
                         <p className="text-[10px] text-slate-500 uppercase mt-1 font-bold">
-                          Colour: {k.colour as string}
+                          Colour: {kb.colour}
                         </p>
                       </div>
 
                       <div className="flex items-center justify-between pt-3 border-t border-slate-900 border-dashed text-xs">
                         <span className="text-[10px] text-slate-600 font-bold">
-                          {(k._count as Record<string, unknown>)?.setups || 0} SETUPS logged
+                          {kb._count?.setups || 0} SETUPS logged
                         </span>
                         <Link
-                          href={`/keyboards/${k.id as string}`}
+                          href={`/keyboards/${kb.id}`}
                           className="flex items-center gap-1 text-[10px] text-indigo-600 hover:text-indigo-800 font-bold uppercase tracking-wider group/link cursor-pointer"
                         >
                           <span>Manage [→]</span>
@@ -248,14 +247,14 @@ export default function DashboardPage() {
             {recentSetups.length > 0 ? (
               <div className="space-y-3.5">
                 {recentSetups.map((setup: unknown) => {
-                  const s = setup as Record<string, unknown>;
+                  const s = setup as Record<string, any>;
                   return (
                   <div
                     key={s.id as string}
                     className="geek-card p-4 flex items-start gap-4 hover:border-emerald-500/80 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-white"
                   >
                     <div className="w-8 h-8 border-2 border-slate-900 bg-slate-50 flex items-center justify-center shrink-0">
-                      {(s.audio_files as Record<string, unknown>[] | undefined)?.length > 0 ? (
+                      {(s.audio_files as Record<string, any>[] | undefined)?.length > 0 ? (
                         <Volume2 className="w-4 h-4 text-emerald-600" />
                       ) : (
                         <Layers className="w-4 h-4 text-slate-600" />
@@ -270,11 +269,11 @@ export default function DashboardPage() {
                         {s.name as string}
                       </Link>
                       <span className="text-[10px] text-slate-500 uppercase tracking-wider block truncate mt-0.5">
-                        {(s.keyboard as Record<string, unknown>)?.brand as string} {(s.keyboard as Record<string, unknown>)?.name as string}
+                        {(s.keyboard as Record<string, any>)?.brand as string} {(s.keyboard as Record<string, any>)?.name as string}
                       </span>
-                      {(s.switches as Record<string, unknown>[] | undefined)?.length > 0 && (
+                      {(s.switches as Record<string, any>[] | undefined)?.length > 0 && (
                         <span className="inline-block mt-1.5 px-2 py-0.5 border border-slate-900 bg-slate-50 text-[9px] text-slate-700 font-bold uppercase tracking-wider">
-                          {((s.switches as Record<string, unknown>[])[0]).brand as string} {((s.switches as Record<string, unknown>[])[0]).model as string}
+                          {((s.switches as Record<string, any>[])[0]).brand as string} {((s.switches as Record<string, any>[])[0]).model as string}
                         </span>
                       )}
                     </div>

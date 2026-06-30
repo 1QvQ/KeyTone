@@ -42,12 +42,12 @@ export default function ComparePage() {
     enabled: !!user && !!setupIdB,
   });
 
-  const getSoundProfileTags = (setup: Record<string, unknown> | null) => {
+  const getSoundProfileTags = (setup: Record<string, any> | null) => {
     if (!setup?.sound_tags || !Array.isArray(setup.sound_tags) || setup.sound_tags.length === 0) return 'None';
     return (setup.sound_tags as { tag: { tag: string } }[]).map((t) => t.tag.tag).join(', ');
   };
 
-  const getFoamTypes = (setup: Record<string, unknown> | null) => {
+  const getFoamTypes = (setup: Record<string, any> | null) => {
     if (!setup?.foams || !Array.isArray(setup.foams) || setup.foams.length === 0) return 'None';
     return (setup.foams as { type: string }[]).map((f) => f.type).join(', ');
   };

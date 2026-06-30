@@ -247,7 +247,7 @@ export default function SearchPage() {
               </div>
             ) : setups && setups.length > 0 ? (
               <div className="space-y-4">
-                {setups.map((setup: Record<string, unknown>) => {
+                {setups.map((setup: Record<string, any>) => {
                   const swConfig = setup.switches?.[0];
                   const kcConfig = setup.keycaps?.[0];
                   const plConfig = setup.plates?.[0];
