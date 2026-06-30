@@ -247,7 +247,7 @@ export default function SearchPage() {
               </div>
             ) : setups && setups.length > 0 ? (
               <div className="space-y-4">
-                {setups.map((setup: any) => {
+                {setups.map((setup: Record<string, unknown>) => {
                   const swConfig = setup.switches?.[0];
                   const kcConfig = setup.keycaps?.[0];
                   const plConfig = setup.plates?.[0];
@@ -315,7 +315,7 @@ export default function SearchPage() {
                           {setup.sound_tags && setup.sound_tags.length > 0 && (
                             <>
                               <Tag className="w-3 h-3 text-slate-400 shrink-0" />
-                              {setup.sound_tags.map(({ tag: t }: any) => (
+                              {setup.sound_tags.map((st: { tag: { id: string; tag: string } }) => (
                                 <span
                                   key={t.id}
                                   className="px-2 py-0.5 border border-emerald-400 bg-emerald-50 text-[9px] text-emerald-800 font-bold uppercase tracking-wider"

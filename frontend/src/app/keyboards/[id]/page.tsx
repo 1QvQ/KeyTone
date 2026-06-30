@@ -80,8 +80,8 @@ export default function KeyboardDetailPage() {
       queryClient.invalidateQueries({ queryKey: ['keyboard', id] });
       queryClient.invalidateQueries({ queryKey: ['keyboards'] });
       setIsEditModalOpen(false);
-    } catch (err: any) {
-      setEditError(err.message || 'Failed to update keyboard');
+    } catch (err: unknown) {
+      setEditError(err instanceof Error ? err.message : 'Failed to update keyboard');
     } finally {
       setEditLoading(false);
     }
@@ -95,8 +95,8 @@ export default function KeyboardDetailPage() {
         queryClient.invalidateQueries({ queryKey: ['keyboards'] });
         queryClient.invalidateQueries({ queryKey: ['metrics'] });
         router.push('/dashboard');
-      } catch (err: any) {
-        alert(err.message || 'Failed to delete keyboard');
+      } catch (err: unknown) {
+        alert(err instanceof Error ? err.message : 'Failed to delete keyboard');
       }
     }
   };
@@ -109,7 +109,7 @@ export default function KeyboardDetailPage() {
       });
       queryClient.invalidateQueries({ queryKey: ['keyboard', id] });
       queryClient.invalidateQueries({ queryKey: ['metrics'] });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to toggle favorite', err);
     }
   };

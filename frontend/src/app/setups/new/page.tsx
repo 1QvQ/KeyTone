@@ -108,8 +108,8 @@ function NewSetupForm() {
       queryClient.invalidateQueries({ queryKey: ['metrics'] });
 
       router.push(`/keyboards/${keyboardId}`);
-    } catch (err: any) {
-      setError(err.message || 'Failed to create configuration');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to create configuration');
     } finally {
       setLoading(false);
     }

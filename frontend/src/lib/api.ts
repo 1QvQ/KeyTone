@@ -51,15 +51,17 @@ async function request(endpoint: string, options: RequestInit = {}) {
   return text ? JSON.parse(text) : {};
 }
 
+type RequestBody = Record<string, unknown> | FormData | null | undefined;
+
 export const api = {
   get: (endpoint: string, options?: RequestInit) => request(endpoint, { ...options, method: 'GET' }),
-  post: (endpoint: string, body?: any, options?: RequestInit) =>
+  post: (endpoint: string, body?: RequestBody, options?: RequestInit) =>
     request(endpoint, {
       ...options,
       method: 'POST',
       body: body instanceof FormData ? body : JSON.stringify(body),
     }),
-  put: (endpoint: string, body?: any, options?: RequestInit) =>
+  put: (endpoint: string, body?: RequestBody, options?: RequestInit) =>
     request(endpoint, {
       ...options,
       method: 'PUT',

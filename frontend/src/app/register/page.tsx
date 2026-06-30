@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { api } from '@/lib/api';
-import { Keyboard, Lock, Mail, User, Loader2, AlertCircle, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { Lock, Mail, User, Loader2, AlertCircle, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { KeySwitchIcon } from '../../components/icons/KeySwitchIcon';
 
 export default function RegisterPage() {
@@ -30,8 +30,8 @@ export default function RegisterPage() {
       setTimeout(() => {
         router.push('/login');
       }, 2000);
-    } catch (err: any) {
-      setError(err.message || 'Failed to register');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to register');
     } finally {
       setLoading(false);
     }

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { api } from '@/lib/api';
-import { Keyboard, Lock, Mail, Loader2, AlertCircle, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { Lock, Mail, Loader2, AlertCircle, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { KeySwitchIcon } from '../../components/icons/KeySwitchIcon';
 
 export default function LoginPage() {
@@ -25,8 +25,8 @@ export default function LoginPage() {
       localStorage.setItem('keytone_token', response.access_token);
       localStorage.setItem('keytone_user', JSON.stringify(response.user));
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Failed to login');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to login');
     } finally {
       setLoading(false);
     }

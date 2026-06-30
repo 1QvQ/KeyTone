@@ -12,7 +12,7 @@ export default function LandingPage() {
   // Web Audio Synth for typing clicks
   const playSynthSound = (type: 'thock' | 'clack') => {
     if (typeof window === 'undefined') return;
-    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContext = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!AudioContext) return;
 
     try {

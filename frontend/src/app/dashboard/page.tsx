@@ -75,8 +75,8 @@ export default function DashboardPage() {
       setKbColour('');
       setKbImageUrl('');
       setIsModalOpen(false);
-    } catch (err: any) {
-      setCreateError(err.message || 'Failed to create keyboard');
+    } catch (err: unknown) {
+      setCreateError(err instanceof Error ? err.message : 'Failed to create keyboard');
     } finally {
       setCreateLoading(false);
     }
@@ -162,7 +162,7 @@ export default function DashboardPage() {
 
             {keyboards && keyboards.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {keyboards.map((kb: any) => (
+                {keyboards.map((kb: Record<string, unknown>) => (
                   <div
                     key={kb.id}
                     className="geek-card flex flex-col justify-between group shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
@@ -245,7 +245,7 @@ export default function DashboardPage() {
 
             {recentSetups.length > 0 ? (
               <div className="space-y-3.5">
-                {recentSetups.map((setup: any) => (
+                {recentSetups.map((setup: Record<string, unknown>) => (
                   <div
                     key={setup.id}
                     className="geek-card p-4 flex items-start gap-4 hover:border-emerald-500/80 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-white"

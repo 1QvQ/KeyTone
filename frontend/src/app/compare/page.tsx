@@ -9,17 +9,10 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import {
   GitCompare,
-  Volume2,
   Heart,
-  Sliders,
-  Tag,
   ArrowRight,
-  Info,
-  Calendar,
-  X,
-  Keyboard,
-  Layers,
   Loader2,
+  Layers,
 } from 'lucide-react';
 
 export default function ComparePage() {
@@ -49,14 +42,14 @@ export default function ComparePage() {
     enabled: !!user && !!setupIdB,
   });
 
-  const getSoundProfileTags = (setup: any) => {
-    if (!setup?.sound_tags || setup.sound_tags.length === 0) return 'None';
-    return setup.sound_tags.map(({ tag: t }: any) => t.tag).join(', ');
+  const getSoundProfileTags = (setup: Record<string, unknown> | null) => {
+    if (!setup?.sound_tags || !Array.isArray(setup.sound_tags) || setup.sound_tags.length === 0) return 'None';
+    return (setup.sound_tags as { tag: { tag: string } }[]).map((t) => t.tag.tag).join(', ');
   };
 
-  const getFoamTypes = (setup: any) => {
-    if (!setup?.foams || setup.foams.length === 0) return 'None';
-    return setup.foams.map((f: any) => f.type).join(', ');
+  const getFoamTypes = (setup: Record<string, unknown> | null) => {
+    if (!setup?.foams || !Array.isArray(setup.foams) || setup.foams.length === 0) return 'None';
+    return (setup.foams as { type: string }[]).map((f) => f.type).join(', ');
   };
 
   return (

@@ -5,9 +5,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Keyboard, Search, GitCompare, LogOut, User } from 'lucide-react';
 import { KeySwitchIcon } from './icons/KeySwitchIcon';
+import type { User as UserType } from '@/lib/types';
 
 interface NavbarProps {
-  user: any;
+  user: UserType | null;
   onLogout: () => void;
 }
 

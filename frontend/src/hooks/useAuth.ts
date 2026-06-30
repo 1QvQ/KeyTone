@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
+import type { User } from '@/lib/types';
 
 export function useAuth(requireAuth: boolean = true) {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -19,7 +20,7 @@ export function useAuth(requireAuth: boolean = true) {
       }
 
       try {
-        const userData = await api.get('/auth/me');
+        const userData = await api.get('/auth/me') as User;
         setUser(userData);
         localStorage.setItem('keytone_user', JSON.stringify(userData));
       } catch (err) {

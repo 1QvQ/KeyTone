@@ -55,8 +55,8 @@ export default function SetupDetailPage() {
         queryClient.invalidateQueries({ queryKey: ['keyboard', setup.keyboard_id] });
         queryClient.invalidateQueries({ queryKey: ['metrics'] });
         router.push(`/keyboards/${setup.keyboard_id}`);
-      } catch (err: any) {
-        alert(err.message || 'Failed to delete setup');
+      } catch (err: unknown) {
+        alert(err instanceof Error ? err.message : 'Failed to delete setup');
       }
     }
   };
@@ -68,7 +68,7 @@ export default function SetupDetailPage() {
       });
       queryClient.invalidateQueries({ queryKey: ['setup', id] });
       queryClient.invalidateQueries({ queryKey: ['metrics'] });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to toggle favorite', err);
     }
   };
@@ -113,8 +113,8 @@ export default function SetupDetailPage() {
       setAudioFile(null);
       queryClient.invalidateQueries({ queryKey: ['setup', id] });
       queryClient.invalidateQueries({ queryKey: ['metrics'] });
-    } catch (err: any) {
-      setAudioError(err.message || 'Failed to upload audio');
+    } catch (err: unknown) {
+      setAudioError(err instanceof Error ? err.message : 'Failed to upload audio');
     } finally {
       setAudioUploading(false);
     }
@@ -139,8 +139,8 @@ export default function SetupDetailPage() {
       setImageFile(null);
       setImageCaption('');
       queryClient.invalidateQueries({ queryKey: ['setup', id] });
-    } catch (err: any) {
-      setImageError(err.message || 'Failed to upload image');
+    } catch (err: unknown) {
+      setImageError(err instanceof Error ? err.message : 'Failed to upload image');
     } finally {
       setImageUploading(false);
     }
@@ -153,8 +153,8 @@ export default function SetupDetailPage() {
         await api.delete(`/files/audio/${audioId}`);
         queryClient.invalidateQueries({ queryKey: ['setup', id] });
         queryClient.invalidateQueries({ queryKey: ['metrics'] });
-      } catch (err: any) {
-        alert(err.message || 'Failed to delete audio');
+      } catch (err: unknown) {
+        alert(err instanceof Error ? err.message : 'Failed to delete audio');
       }
     }
   };
@@ -165,8 +165,8 @@ export default function SetupDetailPage() {
       try {
         await api.delete(`/files/image/${imageId}`);
         queryClient.invalidateQueries({ queryKey: ['setup', id] });
-      } catch (err: any) {
-        alert(err.message || 'Failed to delete image');
+      } catch (err: unknown) {
+        alert(err instanceof Error ? err.message : 'Failed to delete image');
       }
     }
   };
