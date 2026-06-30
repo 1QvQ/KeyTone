@@ -1,0 +1,139 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String     @id @default(uuid())
+  username      String
+  email         String     @unique
+  password_hash String
+  avatar_url    String?
+  created_at    DateTime   @default(now())
+  keyboards     Keyboard[]
+
+  @@map("users")
+}
+
+model Keyboard {
+  id         String   @id @default(uuid())
+  user_id    String
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  name       String
+  brand      String
+  layout     String
+  colour     String
+  image_url  String?
+  created_at DateTime @default(now())
+  setups     Setup[]
+
+  @@map("keyboards")
+}
+
+model Setup {
+  id          String           @id @default(uuid())
+  keyboard_id String
+  keyboard    Keyboard         @relation(fields: [keyboard_id], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  typing_feel Int              @default(5)
+  favourite   Boolean          @default(false)
+  notes       String?
+  created_at  DateTime         @default(now())
+  
+  switches    KeyboardSwitch[]
+  keycaps     Keycaps[]
+  plates      Plate[]
+  foams       Foam[]
+  audio_files AudioFile[]
+  images      SetupImage[]
+  sound_tags  SetupSoundTag[]
+
+  @@map("setups")
+}
+
+model KeyboardSwitch {
+  id       String  @id @default(uuid())
+  setup_id String
+  setup    Setup   @relation(fields: [setup_id], references: [id], onDelete: Cascade)
+  brand    String
+  model    String
+  lubed    Boolean @default(false)
+  filmed   Boolean @default(false)
+  spring   String?
+
+  @@map("switches")
+}
+
+model Keycaps {
+  id       String  @id @default(uuid())
+  setup_id String
+  setup    Setup   @relation(fields: [setup_id], references: [id], onDelete: Cascade)
+  brand    String
+  profile  String
+  material String
+
+  @@map("keycaps")
+}
+
+model Plate {
+  id       String @id @default(uuid())
+  setup_id String
+  setup    Setup  @relation(fields: [setup_id], references: [id], onDelete: Cascade)
+  material String
+
+  @@map("plates")
+}
+
+model Foam {
+  id       String @id @default(uuid())
+  setup_id String
+  setup    Setup  @relation(fields: [setup_id], references: [id], onDelete: Cascade)
+  type     String
+
+  @@map("foams")
+}
+
+model AudioFile {
+  id          String   @id @default(uuid())
+  setup_id    String
+  setup       Setup    @relation(fields: [setup_id], references: [id], onDelete: Cascade)
+  file_url    String
+  duration    Int?     
+  format      String
+  size        Int      
+  uploaded_at DateTime @default(now())
+
+  @@map("audio_files")
+}
+
+model SetupImage {
+  id        String  @id @default(uuid())
+  setup_id  String
+  setup     Setup   @relation(fields: [setup_id], references: [id], onDelete: Cascade)
+  image_url String
+  caption   String?
+
+  @@map("images")
+}
+
+model SoundTag {
+  id     String          @id @default(uuid())
+  tag    String          @unique
+  setups SetupSoundTag[]
+
+  @@map("sound_tags")
+}
+
+model SetupSoundTag {
+  setup_id String
+  setup    Setup    @relation(fields: [setup_id], references: [id], onDelete: Cascade)
+  tag_id   String
+  tag      SoundTag @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+
+  @@id([setup_id, tag_id])
+  @@map("setup_sound_tags")
+}
