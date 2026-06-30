@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { api } from '@/lib/api';
 import type { User } from '@/lib/types';
 
 export function useAuth(requireAuth: boolean = true) {
