@@ -318,6 +318,7 @@ function NewSetupForm() {
                     <option value="MT3">MT3</option>
                     <option value="XDA">XDA</option>
                     <option value="KAT">KAT</option>
+                    <option value="Low profile">Low Profile</option>
                   </select>
                 </div>
 

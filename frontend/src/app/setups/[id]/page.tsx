@@ -232,10 +232,11 @@ export default function SetupDetailPage() {
           <div className="flex items-center gap-3 shrink-0">
             <Link
               href={`/setups/${setup.id}/edit`}
-              className="p-3 border-2 border-slate-900 bg-white hover:bg-slate-50 text-slate-700 transition-all cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[0px_0px_0px_0px]"
+              className="px-3 py-2 border-2 border-slate-900 bg-white hover:bg-slate-50 text-slate-900 transition-all cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[0px_0px_0px_0px] text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5"
               title="Edit Setup"
             >
-              <Sliders className="w-4.5 h-4.5" />
+              <Sliders className="w-3.5 h-3.5" />
+              <span>Edit Setup</span>
             </Link>
             <button
               onClick={toggleFavorite}
