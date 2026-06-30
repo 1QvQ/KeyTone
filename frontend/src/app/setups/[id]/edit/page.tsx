@@ -36,7 +36,6 @@ export default function EditSetupPage() {
   const [description, setDescription] = useState('');
   const [favourite, setFavourite] = useState(false);
   const [notes, setNotes] = useState('');
-  const [caseMaterial, setCaseMaterial] = useState('Aluminum');
 
   // 2. Switch configuration state
   const [switchBrand, setSwitchBrand] = useState('');
@@ -79,7 +78,6 @@ export default function EditSetupPage() {
         setDescription(setup.description || '');
         setFavourite(setup.favourite || false);
         setNotes(setup.notes || '');
-        setCaseMaterial(setup.case_material || 'Aluminum');
 
         const sw = setup.switches?.[0];
         if (sw) {
@@ -159,7 +157,6 @@ export default function EditSetupPage() {
           material: keycapMaterial,
         },
         plate_material: plateMaterial || null,
-        case_material: caseMaterial || null,
         foams: selectedFoams,
         sound_tags: selectedTags,
       };
@@ -220,14 +217,14 @@ export default function EditSetupPage() {
           Access Denied
         </span>
         <span className="text-slate-500 text-xs font-bold uppercase tracking-wider max-w-md">
-          You are not authorized to edit this setup profile.
+          You are not authorised to edit this setup profile.
         </span>
         <Link
           href={`/setups/${id}`}
           className="inline-flex items-center gap-2 px-4 py-2 border-2 border-slate-900 text-xs font-bold uppercase tracking-wider text-slate-800 bg-white hover:bg-slate-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[0px_0px_0px_0px] transition-all"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Setup Visualizer</span>
+          <span>Back to Setup Visualiser</span>
         </Link>
       </div>
     );
@@ -266,7 +263,7 @@ export default function EditSetupPage() {
 
         {/* Config Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          
+
           {/* Section 1: General Info */}
           <div className="geek-card p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-4">
             <h2 className="text-xs font-bold text-slate-950 uppercase font-pixel tracking-widest border-b-2 border-slate-900 pb-2">
@@ -299,28 +296,6 @@ export default function EditSetupPage() {
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 border-2 border-slate-900 focus:bg-white focus:ring-1 focus:ring-slate-900 outline-none text-xs text-slate-900 placeholder:text-slate-400 font-geek"
                 />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div>
-                <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-                  Case Material
-                </label>
-                <select
-                  value={caseMaterial}
-                  onChange={(e) => setCaseMaterial(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border-2 border-slate-900 focus:bg-white focus:ring-1 focus:ring-slate-900 outline-none text-xs text-slate-900 cursor-pointer font-geek"
-                >
-                  <option value="Aluminum">Aluminum</option>
-                  <option value="Plastic (ABS)">Plastic (ABS)</option>
-                  <option value="Polycarbonate (PC)">Polycarbonate (PC)</option>
-                  <option value="Acrylic">Acrylic</option>
-                  <option value="Wood">Wood</option>
-                  <option value="Carbon Fiber">Carbon Fiber</option>
-                  <option value="Resin">Resin</option>
-                  <option value="Unknown/Other">Unknown / Other</option>
-                </select>
               </div>
             </div>
 
@@ -416,7 +391,7 @@ export default function EditSetupPage() {
 
           {/* Section 3: Keycaps & Plates */}
           <div className="geek-card p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] gap-6 grid grid-cols-1 md:grid-cols-2">
-            
+
             {/* Keycaps */}
             <div className="space-y-4">
               <h2 className="text-xs font-bold text-slate-950 uppercase font-pixel tracking-widest border-b-2 border-slate-900 pb-2">
@@ -452,7 +427,6 @@ export default function EditSetupPage() {
                     <option value="MT3">MT3</option>
                     <option value="XDA">XDA</option>
                     <option value="KAT">KAT</option>
-                    <option value="Low profile">Low Profile</option>
                   </select>
                 </div>
 
@@ -506,7 +480,7 @@ export default function EditSetupPage() {
               5. Dampeners / Acoustic Foams
             </h2>
 
-             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {AVAILABLE_FOAMS.map((foam) => {
                 const isSelected = selectedFoams.includes(foam);
                 return (
@@ -514,11 +488,10 @@ export default function EditSetupPage() {
                     key={foam}
                     type="button"
                     onClick={() => handleFoamChange(foam)}
-                    className={`px-4 py-2.5 border-2 text-xs font-bold tracking-wide transition-all cursor-pointer text-left flex items-center justify-between ${
-                      isSelected
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)]'
-                        : 'bg-white text-slate-800 border-slate-900 hover:bg-slate-50'
-                    }`}
+                    className={`px-4 py-2.5 border-2 text-xs font-bold tracking-wide transition-all cursor-pointer text-left flex items-center justify-between ${isSelected
+                      ? 'bg-slate-900 text-white border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)]'
+                      : 'bg-white text-slate-800 border-slate-900 hover:bg-slate-50'
+                      }`}
                   >
                     <span>{foam}</span>
                     {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />}
@@ -530,7 +503,7 @@ export default function EditSetupPage() {
 
           {/* Section 5: Sound Profiles & Feedback */}
           <div className="geek-card p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] gap-6 grid grid-cols-1 md:grid-cols-2">
-            
+
             {/* Sound tags */}
             <div className="space-y-4">
               <h2 className="text-xs font-bold text-slate-950 uppercase font-pixel tracking-widest border-b-2 border-slate-900 pb-2">
@@ -545,11 +518,10 @@ export default function EditSetupPage() {
                       key={tag}
                       type="button"
                       onClick={() => handleTagChange(tag)}
-                      className={`px-3 py-1.5 border-2 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-emerald-500 text-slate-950 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] font-black'
-                          : 'bg-white text-slate-700 border-slate-900 hover:bg-slate-50'
-                      }`}
+                      className={`px-3 py-1.5 border-2 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${isSelected
+                        ? 'bg-emerald-500 text-slate-950 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] font-black'
+                        : 'bg-white text-slate-700 border-slate-900 hover:bg-slate-50'
+                        }`}
                     >
                       {tag}
                     </button>
