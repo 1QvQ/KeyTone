@@ -79,11 +79,12 @@ jobs:
 
       - run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Load pulled environment variables into GITHUB_ENV
+      - name: Load pulled environment variables for Next.js
         run: |
           if [ -f .vercel/.env.production.local ]; then
-            echo "Found Vercel env file. Loading variables..."
-            # Strip quotes around values and append to GITHUB_ENV
+            echo "Found Vercel env file. Copying to frontend directory..."
+            cp .vercel/.env.production.local frontend/.env.production.local
+            # Also append to GITHUB_ENV just in case
             grep -v '^#' .vercel/.env.production.local | grep -v '^$' | sed -e 's/="\(.*\)"$/=\1/' -e "s/='\(.*\)'$/=\1/" >> $GITHUB_ENV
           else
             echo "Vercel env file NOT found!"
