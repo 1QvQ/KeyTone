@@ -54,7 +54,7 @@ export class FilesController {
   async uploadAudio(
     @GetUser() user: any,
     @Body('setup_id') setupId: string,
-    @Body('duration') duration: string, 
+    @Body('duration') duration: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
     await this.verifySetupOwner(setupId, user.id);

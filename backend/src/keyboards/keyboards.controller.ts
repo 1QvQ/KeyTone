@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { KeyboardsService } from './keyboards.service';
 import { CreateKeyboardDto } from './dto/create-keyboard.dto';
 import { UpdateKeyboardDto } from './dto/update-keyboard.dto';

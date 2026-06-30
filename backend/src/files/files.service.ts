@@ -23,7 +23,8 @@ export class FilesService {
     const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
     if (connectionString) {
       try {
-        const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
+        const blobServiceClient =
+          BlobServiceClient.fromConnectionString(connectionString);
         this.containerClient = blobServiceClient.getContainerClient('uploads');
         this.isAzure = true;
         console.log('Azure Blob Storage initialized.');
@@ -44,12 +45,16 @@ export class FilesService {
     }
   }
 
-  private async uploadToSupabase(blobName: string, buffer: Buffer, mimeType: string): Promise<string> {
+  private async uploadToSupabase(
+    blobName: string,
+    buffer: Buffer,
+    mimeType: string,
+  ): Promise<string> {
     const uploadUrl = `${this.supabaseUrl}/storage/v1/object/${this.supabaseBucket}/${blobName}`;
     const response = await fetch(uploadUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${this.supabaseKey}`,
+        Authorization: `Bearer ${this.supabaseKey}`,
         'Content-Type': mimeType,
         'x-upsert': 'true',
       },
@@ -58,7 +63,9 @@ export class FilesService {
 
     if (!response.ok) {
       const errText = await response.text();
-      throw new Error(`Supabase Storage upload failed: ${response.statusText} - ${errText}`);
+      throw new Error(
+        `Supabase Storage upload failed: ${response.statusText} - ${errText}`,
+      );
     }
 
     // Return the public URL for the uploaded object
@@ -70,16 +77,22 @@ export class FilesService {
     const response = await fetch(deleteUrl, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${this.supabaseKey}`,
+        Authorization: `Bearer ${this.supabaseKey}`,
       },
     });
 
     if (!response.ok) {
-      console.error(`Failed to delete from Supabase storage: ${response.statusText}`);
+      console.error(
+        `Failed to delete from Supabase storage: ${response.statusText}`,
+      );
     }
   }
 
-  async saveImage(setupId: string, file: Express.Multer.File, caption?: string) {
+  async saveImage(
+    setupId: string,
+    file: Express.Multer.File,
+    caption?: string,
+  ) {
     if (!file) {
       throw new BadRequestException('No image file provided');
     }
@@ -91,9 +104,16 @@ export class FilesService {
     // Prioritize Supabase Storage
     if (this.isSupabase) {
       try {
-        imageUrl = await this.uploadToSupabase(`images/${uniqueFilename}`, file.buffer, file.mimetype);
+        imageUrl = await this.uploadToSupabase(
+          `images/${uniqueFilename}`,
+          file.buffer,
+          file.mimetype,
+        );
       } catch (err) {
-        console.error('Supabase upload failed, falling back to other storage options:', err);
+        console.error(
+          'Supabase upload failed, falling back to other storage options:',
+          err,
+        );
       }
     }
 
@@ -109,7 +129,11 @@ export class FilesService {
 
     // Fallback to local async storage
     if (!imageUrl) {
-      const destinationPath = path.join(this.uploadDir, 'images', uniqueFilename);
+      const destinationPath = path.join(
+        this.uploadDir,
+        'images',
+        uniqueFilename,
+      );
       await fs.promises.writeFile(destinationPath, file.buffer);
       imageUrl = `/uploads/images/${uniqueFilename}`;
     }
@@ -123,7 +147,11 @@ export class FilesService {
     });
   }
 
-  async saveAudio(setupId: string, file: Express.Multer.File, durationSeconds?: number) {
+  async saveAudio(
+    setupId: string,
+    file: Express.Multer.File,
+    durationSeconds?: number,
+  ) {
     if (!file) {
       throw new BadRequestException('No audio file provided');
     }
@@ -131,7 +159,9 @@ export class FilesService {
     const fileExt = path.extname(file.originalname).toLowerCase();
     const allowedExts = ['.wav', '.mp3', '.flac', '.aac', '.m4a'];
     if (!allowedExts.includes(fileExt)) {
-      throw new BadRequestException('Unsupported audio format. Use WAV, MP3, FLAC, or AAC');
+      throw new BadRequestException(
+        'Unsupported audio format. Use WAV, MP3, FLAC, or AAC',
+      );
     }
 
     const uniqueFilename = `${setupId}-${Date.now()}${fileExt}`;
@@ -140,9 +170,16 @@ export class FilesService {
     // Prioritize Supabase Storage
     if (this.isSupabase) {
       try {
-        audioUrl = await this.uploadToSupabase(`audio/${uniqueFilename}`, file.buffer, file.mimetype);
+        audioUrl = await this.uploadToSupabase(
+          `audio/${uniqueFilename}`,
+          file.buffer,
+          file.mimetype,
+        );
       } catch (err) {
-        console.error('Supabase audio upload failed, falling back to other storage options:', err);
+        console.error(
+          'Supabase audio upload failed, falling back to other storage options:',
+          err,
+        );
       }
     }
 
@@ -158,7 +195,11 @@ export class FilesService {
 
     // Fallback to local async storage
     if (!audioUrl) {
-      const destinationPath = path.join(this.uploadDir, 'audio', uniqueFilename);
+      const destinationPath = path.join(
+        this.uploadDir,
+        'audio',
+        uniqueFilename,
+      );
       await fs.promises.writeFile(destinationPath, file.buffer);
       audioUrl = `/uploads/audio/${uniqueFilename}`;
     }
@@ -180,8 +221,14 @@ export class FilesService {
       throw new BadRequestException('Image not found');
     }
 
-    if (img.image_url.startsWith('http://') || img.image_url.startsWith('https://')) {
-      if (this.isSupabase && img.image_url.includes(`/object/public/${this.supabaseBucket}/`)) {
+    if (
+      img.image_url.startsWith('http://') ||
+      img.image_url.startsWith('https://')
+    ) {
+      if (
+        this.isSupabase &&
+        img.image_url.includes(`/object/public/${this.supabaseBucket}/`)
+      ) {
         let blobName = '';
         if (img.image_url.includes('/images/')) {
           blobName = `images/${img.image_url.split('/images/')[1]}`;
@@ -195,7 +242,8 @@ export class FilesService {
           blobName = `images/${img.image_url.split('/images/')[1]}`;
         }
         if (blobName) {
-          const blockBlobClient = this.containerClient.getBlockBlobClient(blobName);
+          const blockBlobClient =
+            this.containerClient.getBlockBlobClient(blobName);
           await blockBlobClient.deleteIfExists();
         }
       }
@@ -217,8 +265,14 @@ export class FilesService {
       throw new BadRequestException('Audio not found');
     }
 
-    if (audio.file_url.startsWith('http://') || audio.file_url.startsWith('https://')) {
-      if (this.isSupabase && audio.file_url.includes(`/object/public/${this.supabaseBucket}/`)) {
+    if (
+      audio.file_url.startsWith('http://') ||
+      audio.file_url.startsWith('https://')
+    ) {
+      if (
+        this.isSupabase &&
+        audio.file_url.includes(`/object/public/${this.supabaseBucket}/`)
+      ) {
         let blobName = '';
         if (audio.file_url.includes('/audio/')) {
           blobName = `audio/${audio.file_url.split('/audio/')[1]}`;
@@ -232,7 +286,8 @@ export class FilesService {
           blobName = `audio/${audio.file_url.split('/audio/')[1]}`;
         }
         if (blobName) {
-          const blockBlobClient = this.containerClient.getBlockBlobClient(blobName);
+          const blockBlobClient =
+            this.containerClient.getBlockBlobClient(blobName);
           await blockBlobClient.deleteIfExists();
         }
       }
