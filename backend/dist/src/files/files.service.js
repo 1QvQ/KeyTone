@@ -53,6 +53,10 @@ let FilesService = class FilesService {
     uploadDir = path.join(process.cwd(), 'uploads');
     containerClient = null;
     isAzure = false;
+    isSupabase = false;
+    supabaseUrl = '';
+    supabaseKey = '';
+    supabaseBucket = 'uploads';
     constructor(prisma) {
         this.prisma = prisma;
         fs.mkdirSync(path.join(this.uploadDir, 'images'), { recursive: true });
@@ -63,11 +67,49 @@ let FilesService = class FilesService {
                 const blobServiceClient = storage_blob_1.BlobServiceClient.fromConnectionString(connectionString);
                 this.containerClient = blobServiceClient.getContainerClient('uploads');
                 this.isAzure = true;
-                console.log('Azure Blob Storage initialized successfully.');
+                console.log('Azure Blob Storage initialized.');
             }
             catch (err) {
                 console.error('Failed to initialize Azure Blob Storage client:', err);
             }
+        }
+        const sUrl = process.env.SUPABASE_URL;
+        const sKey = process.env.SUPABASE_KEY;
+        if (sUrl && sKey) {
+            this.supabaseUrl = sUrl.replace(/\/$/, '');
+            this.supabaseKey = sKey;
+            this.supabaseBucket = process.env.SUPABASE_BUCKET || 'uploads';
+            this.isSupabase = true;
+            console.log('Supabase Storage integration enabled.');
+        }
+    }
+    async uploadToSupabase(blobName, buffer, mimeType) {
+        const uploadUrl = `${this.supabaseUrl}/storage/v1/object/${this.supabaseBucket}/${blobName}`;
+        const response = await fetch(uploadUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${this.supabaseKey}`,
+                'Content-Type': mimeType,
+                'x-upsert': 'true',
+            },
+            body: buffer,
+        });
+        if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(`Supabase Storage upload failed: ${response.statusText} - ${errText}`);
+        }
+        return `${this.supabaseUrl}/storage/v1/object/public/${this.supabaseBucket}/${blobName}`;
+    }
+    async deleteFromSupabase(blobName) {
+        const deleteUrl = `${this.supabaseUrl}/storage/v1/object/${this.supabaseBucket}/${blobName}`;
+        const response = await fetch(deleteUrl, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${this.supabaseKey}`,
+            },
+        });
+        if (!response.ok) {
+            console.error(`Failed to delete from Supabase storage: ${response.statusText}`);
         }
     }
     async saveImage(setupId, file, caption) {
@@ -77,7 +119,15 @@ let FilesService = class FilesService {
         const fileExt = path.extname(file.originalname).toLowerCase();
         const uniqueFilename = `${setupId}-${Date.now()}${fileExt}`;
         let imageUrl = '';
-        if (this.isAzure && this.containerClient) {
+        if (this.isSupabase) {
+            try {
+                imageUrl = await this.uploadToSupabase(`images/${uniqueFilename}`, file.buffer, file.mimetype);
+            }
+            catch (err) {
+                console.error('Supabase upload failed, falling back to other storage options:', err);
+            }
+        }
+        if (!imageUrl && this.isAzure && this.containerClient) {
             const blobName = `images/${uniqueFilename}`;
             const blockBlobClient = this.containerClient.getBlockBlobClient(blobName);
             await blockBlobClient.upload(file.buffer, file.size, {
@@ -85,7 +135,7 @@ let FilesService = class FilesService {
             });
             imageUrl = blockBlobClient.url;
         }
-        else {
+        if (!imageUrl) {
             const destinationPath = path.join(this.uploadDir, 'images', uniqueFilename);
             await fs.promises.writeFile(destinationPath, file.buffer);
             imageUrl = `/uploads/images/${uniqueFilename}`;
@@ -109,7 +159,15 @@ let FilesService = class FilesService {
         }
         const uniqueFilename = `${setupId}-${Date.now()}${fileExt}`;
         let audioUrl = '';
-        if (this.isAzure && this.containerClient) {
+        if (this.isSupabase) {
+            try {
+                audioUrl = await this.uploadToSupabase(`audio/${uniqueFilename}`, file.buffer, file.mimetype);
+            }
+            catch (err) {
+                console.error('Supabase audio upload failed, falling back to other storage options:', err);
+            }
+        }
+        if (!audioUrl && this.isAzure && this.containerClient) {
             const blobName = `audio/${uniqueFilename}`;
             const blockBlobClient = this.containerClient.getBlockBlobClient(blobName);
             await blockBlobClient.upload(file.buffer, file.size, {
@@ -117,7 +175,7 @@ let FilesService = class FilesService {
             });
             audioUrl = blockBlobClient.url;
         }
-        else {
+        if (!audioUrl) {
             const destinationPath = path.join(this.uploadDir, 'audio', uniqueFilename);
             await fs.promises.writeFile(destinationPath, file.buffer);
             audioUrl = `/uploads/audio/${uniqueFilename}`;
@@ -138,7 +196,16 @@ let FilesService = class FilesService {
             throw new common_1.BadRequestException('Image not found');
         }
         if (img.image_url.startsWith('http://') || img.image_url.startsWith('https://')) {
-            if (this.isAzure && this.containerClient) {
+            if (this.isSupabase && img.image_url.includes(`/object/public/${this.supabaseBucket}/`)) {
+                let blobName = '';
+                if (img.image_url.includes('/images/')) {
+                    blobName = `images/${img.image_url.split('/images/')[1]}`;
+                }
+                if (blobName) {
+                    await this.deleteFromSupabase(blobName);
+                }
+            }
+            else if (this.isAzure && this.containerClient) {
                 let blobName = '';
                 if (img.image_url.includes('/images/')) {
                     blobName = `images/${img.image_url.split('/images/')[1]}`;
@@ -164,7 +231,16 @@ let FilesService = class FilesService {
             throw new common_1.BadRequestException('Audio not found');
         }
         if (audio.file_url.startsWith('http://') || audio.file_url.startsWith('https://')) {
-            if (this.isAzure && this.containerClient) {
+            if (this.isSupabase && audio.file_url.includes(`/object/public/${this.supabaseBucket}/`)) {
+                let blobName = '';
+                if (audio.file_url.includes('/audio/')) {
+                    blobName = `audio/${audio.file_url.split('/audio/')[1]}`;
+                }
+                if (blobName) {
+                    await this.deleteFromSupabase(blobName);
+                }
+            }
+            else if (this.isAzure && this.containerClient) {
                 let blobName = '';
                 if (audio.file_url.includes('/audio/')) {
                     blobName = `audio/${audio.file_url.split('/audio/')[1]}`;

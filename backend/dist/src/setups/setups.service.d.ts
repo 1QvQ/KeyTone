@@ -18,28 +18,28 @@ export declare class SetupsService {
         keycaps: {
             id: string;
             brand: string;
+            setup_id: string;
             profile: string;
             material: string;
-            setup_id: string;
         }[];
         switches: {
             id: string;
             brand: string;
+            setup_id: string;
             model: string;
             lubed: boolean;
             filmed: boolean;
             spring: string | null;
-            setup_id: string;
         }[];
         plates: {
             id: string;
-            material: string;
             setup_id: string;
+            material: string;
         }[];
         foams: {
             id: string;
-            type: string;
             setup_id: string;
+            type: string;
         }[];
         audio_files: {
             id: string;
@@ -62,8 +62,8 @@ export declare class SetupsService {
                 tag: string;
             };
         } & {
-            tag_id: string;
             setup_id: string;
+            tag_id: string;
         })[];
     } & {
         id: string;
@@ -89,28 +89,28 @@ export declare class SetupsService {
         keycaps: {
             id: string;
             brand: string;
+            setup_id: string;
             profile: string;
             material: string;
-            setup_id: string;
         }[];
         switches: {
             id: string;
             brand: string;
+            setup_id: string;
             model: string;
             lubed: boolean;
             filmed: boolean;
             spring: string | null;
-            setup_id: string;
         }[];
         plates: {
             id: string;
-            material: string;
             setup_id: string;
+            material: string;
         }[];
         foams: {
             id: string;
-            type: string;
             setup_id: string;
+            type: string;
         }[];
         audio_files: {
             id: string;
@@ -133,8 +133,8 @@ export declare class SetupsService {
                 tag: string;
             };
         } & {
-            tag_id: string;
             setup_id: string;
+            tag_id: string;
         })[];
     } & {
         id: string;
@@ -160,28 +160,28 @@ export declare class SetupsService {
         keycaps: {
             id: string;
             brand: string;
+            setup_id: string;
             profile: string;
             material: string;
-            setup_id: string;
         }[];
         switches: {
             id: string;
             brand: string;
+            setup_id: string;
             model: string;
             lubed: boolean;
             filmed: boolean;
             spring: string | null;
-            setup_id: string;
         }[];
         plates: {
             id: string;
-            material: string;
             setup_id: string;
+            material: string;
         }[];
         foams: {
             id: string;
-            type: string;
             setup_id: string;
+            type: string;
         }[];
         audio_files: {
             id: string;
@@ -204,8 +204,8 @@ export declare class SetupsService {
                 tag: string;
             };
         } & {
-            tag_id: string;
             setup_id: string;
+            tag_id: string;
         })[];
     } & {
         id: string;
@@ -242,28 +242,28 @@ export declare class SetupsService {
         keycaps: {
             id: string;
             brand: string;
+            setup_id: string;
             profile: string;
             material: string;
-            setup_id: string;
         }[];
         switches: {
             id: string;
             brand: string;
+            setup_id: string;
             model: string;
             lubed: boolean;
             filmed: boolean;
             spring: string | null;
-            setup_id: string;
         }[];
         plates: {
             id: string;
-            material: string;
             setup_id: string;
+            material: string;
         }[];
         foams: {
             id: string;
-            type: string;
             setup_id: string;
+            type: string;
         }[];
         audio_files: {
             id: string;
@@ -286,8 +286,8 @@ export declare class SetupsService {
                 tag: string;
             };
         } & {
-            tag_id: string;
             setup_id: string;
+            tag_id: string;
         })[];
     } & {
         id: string;
@@ -320,11 +320,11 @@ export declare class SetupsService {
             switches: {
                 id: string;
                 brand: string;
+                setup_id: string;
                 model: string;
                 lubed: boolean;
                 filmed: boolean;
                 spring: string | null;
-                setup_id: string;
             }[];
             audio_files: {
                 id: string;

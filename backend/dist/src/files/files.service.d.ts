@@ -4,7 +4,13 @@ export declare class FilesService {
     private readonly uploadDir;
     private containerClient;
     private isAzure;
+    private isSupabase;
+    private supabaseUrl;
+    private supabaseKey;
+    private supabaseBucket;
     constructor(prisma: PrismaService);
+    private uploadToSupabase;
+    private deleteFromSupabase;
     saveImage(setupId: string, file: Express.Multer.File, caption?: string): Promise<{
         id: string;
         image_url: string;
