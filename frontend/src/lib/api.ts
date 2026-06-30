@@ -1,10 +1,7 @@
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 if (!BACKEND_URL) {
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error('NEXT_PUBLIC_BACKEND_URL environment variable is required in production');
-  }
-  console.warn('[api] NEXT_PUBLIC_BACKEND_URL not set, falling back to default for development');
+  console.warn('[api] NEXT_PUBLIC_BACKEND_URL not set, falling back to default.');
 }
 
 const BASE_URL = BACKEND_URL || 'http://127.0.0.1:3001';
