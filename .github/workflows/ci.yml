@@ -82,7 +82,11 @@ jobs:
       - name: Load pulled environment variables into GITHUB_ENV
         run: |
           if [ -f .vercel/.env.production.local ]; then
-            grep -v '^#' .vercel/.env.production.local | grep -v '^$' >> $GITHUB_ENV
+            echo "Found Vercel env file. Loading variables..."
+            # Strip quotes around values and append to GITHUB_ENV
+            grep -v '^#' .vercel/.env.production.local | grep -v '^$' | sed -e 's/="\(.*\)"$/=\1/' -e "s/='\(.*\)'$/=\1/" >> $GITHUB_ENV
+          else
+            echo "Vercel env file NOT found!"
           fi
 
       - run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
