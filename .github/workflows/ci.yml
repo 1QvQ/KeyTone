@@ -82,7 +82,7 @@ jobs:
       - name: Load pulled environment variables into GITHUB_ENV
         run: |
           if [ -f .vercel/.env.production.local ]; then
-            cat .vercel/.env.production.local >> $GITHUB_ENV
+            grep -v '^#' .vercel/.env.production.local | grep -v '^$' >> $GITHUB_ENV
           fi
 
       - run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
