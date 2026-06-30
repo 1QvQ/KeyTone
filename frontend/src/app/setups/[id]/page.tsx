@@ -230,6 +230,13 @@ export default function SetupDetailPage() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
+            <Link
+              href={`/setups/${setup.id}/edit`}
+              className="p-3 border-2 border-slate-900 bg-white hover:bg-slate-50 text-slate-700 transition-all cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[0px_0px_0px_0px]"
+              title="Edit Setup"
+            >
+              <Sliders className="w-4.5 h-4.5" />
+            </Link>
             <button
               onClick={toggleFavorite}
               className={`p-3 border-2 border-slate-900 bg-white hover:bg-slate-50 transition-all cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[0px_0px_0px_0px] ${
