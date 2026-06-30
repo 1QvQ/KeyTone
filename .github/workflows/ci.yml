@@ -79,6 +79,9 @@ jobs:
 
       - run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
+      - name: Copy pulled environment variables to frontend directory
+        run: cp .vercel/.env.production.local frontend/.env.production.local
+
       - run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - run: npx vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
