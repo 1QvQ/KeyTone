@@ -167,8 +167,16 @@ export default function ComparePage() {
                       </span>
                     </div>
 
-                    {/* Foams */}
+                    {/* Case Material */}
                     <div className="p-3 grid grid-cols-3 gap-2 bg-white text-[11px] font-bold uppercase tracking-wider">
+                      <span className="text-slate-500">Case</span>
+                      <span className="col-span-2 text-slate-900">
+                        {setupA.case_material || 'N/A'}
+                      </span>
+                    </div>
+
+                    {/* Foams */}
+                    <div className="p-3 grid grid-cols-3 gap-2 bg-slate-50 text-[11px] font-bold uppercase tracking-wider">
                       <span className="text-slate-500">Dampeners</span>
                       <span className="col-span-2 text-slate-900">
                         {getFoamTypes(setupA)}
@@ -176,7 +184,7 @@ export default function ComparePage() {
                     </div>
 
                     {/* Sound profile */}
-                    <div className="p-3 grid grid-cols-3 gap-2 bg-slate-50 text-[11px] font-bold uppercase tracking-wider">
+                    <div className="p-3 grid grid-cols-3 gap-2 bg-white text-[11px] font-bold uppercase tracking-wider">
                       <span className="text-slate-500">Sound Profile</span>
                       <span className="col-span-2 text-emerald-700 font-pixel text-[9px] tracking-widest uppercase">
                         {getSoundProfileTags(setupA)}
@@ -184,7 +192,7 @@ export default function ComparePage() {
                     </div>
 
                     {/* Feel */}
-                    <div className="p-3 grid grid-cols-3 gap-2 bg-white text-[11px] font-bold uppercase tracking-wider">
+                    <div className="p-3 grid grid-cols-3 gap-2 bg-slate-50 text-[11px] font-bold uppercase tracking-wider">
                       <span className="text-slate-500">Typing Feel</span>
                       <span className="col-span-2 text-slate-900">
                         {setupA.typing_feel} / 10
@@ -286,8 +294,16 @@ export default function ComparePage() {
                       </span>
                     </div>
 
-                    {/* Foams */}
+                    {/* Case Material */}
                     <div className="p-3 grid grid-cols-3 gap-2 bg-white text-[11px] font-bold uppercase tracking-wider">
+                      <span className="text-slate-500">Case</span>
+                      <span className="col-span-2 text-slate-900">
+                        {setupB.case_material || 'N/A'}
+                      </span>
+                    </div>
+
+                    {/* Foams */}
+                    <div className="p-3 grid grid-cols-3 gap-2 bg-slate-50 text-[11px] font-bold uppercase tracking-wider">
                       <span className="text-slate-500">Dampeners</span>
                       <span className="col-span-2 text-slate-900">
                         {getFoamTypes(setupB)}
@@ -295,7 +311,7 @@ export default function ComparePage() {
                     </div>
 
                     {/* Sound profile */}
-                    <div className="p-3 grid grid-cols-3 gap-2 bg-slate-50 text-[11px] font-bold uppercase tracking-wider">
+                    <div className="p-3 grid grid-cols-3 gap-2 bg-white text-[11px] font-bold uppercase tracking-wider">
                       <span className="text-slate-500">Sound Profile</span>
                       <span className="col-span-2 text-emerald-700 font-pixel text-[9px] tracking-widest uppercase">
                         {getSoundProfileTags(setupB)}
@@ -303,7 +319,7 @@ export default function ComparePage() {
                     </div>
 
                     {/* Feel */}
-                    <div className="p-3 grid grid-cols-3 gap-2 bg-white text-[11px] font-bold uppercase tracking-wider">
+                    <div className="p-3 grid grid-cols-3 gap-2 bg-slate-50 text-[11px] font-bold uppercase tracking-wider">
                       <span className="text-slate-500">Typing Feel</span>
                       <span className="col-span-2 text-slate-900">
                         {setupB.typing_feel} / 10

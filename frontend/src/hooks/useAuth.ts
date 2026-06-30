@@ -9,7 +9,7 @@ export function useAuth(requireAuth: boolean = true) {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem('keytone_token');
+    const token = sessionStorage.getItem('keytone_token');
     if (!token) {
       setLoading(false);
       if (requireAuth) {
@@ -18,7 +18,7 @@ export function useAuth(requireAuth: boolean = true) {
       return;
     }
 
-    const cached = localStorage.getItem('keytone_user');
+    const cached = sessionStorage.getItem('keytone_user');
     if (cached) {
       try {
         setUser(JSON.parse(cached) as User);
@@ -29,8 +29,8 @@ export function useAuth(requireAuth: boolean = true) {
   }, [router, requireAuth]);
 
   const logout = () => {
-    localStorage.removeItem('keytone_token');
-    localStorage.removeItem('keytone_user');
+    sessionStorage.removeItem('keytone_token');
+    sessionStorage.removeItem('keytone_user');
     setUser(null);
     router.push('/login');
   };

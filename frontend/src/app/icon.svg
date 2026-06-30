@@ -1,18 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#121212" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Bottom base pins -->
-  <path d="M6 19v3" stroke="#64748b" />
-  <path d="M18 19v3" stroke="#64748b" />
-  
-  <!-- Base plate -->
-  <path d="M3 19h18" stroke="#121212" stroke-width="2.5" />
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#121212"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <!-- 3D Base Plate (Solid black bottom housing) -->
+  <path
+    d="M2.5 13.5 L12 17.5 L21.5 13.5 L21.5 16.5 L12 20.5 L2.5 16.5 Z"
+    fill="#121212"
+    stroke="#121212"
+    stroke-width="1"
+    stroke-linejoin="miter"
+  />
+  <path
+    d="M2.5 13.5 L12 17.5 L21.5 13.5 L12 9.5 Z"
+    fill="#121212"
+    stroke="#121212"
+    stroke-width="1"
+  />
 
-  <!-- Main housing (white filled trapezoid) -->
-  <path d="M4 19l2.5-9h11l2.5 9Z" fill="#ffffff" stroke="#121212" />
+  <!-- Main Upper Housing (White sloped sides) -->
+  <path
+    d="M4 12.5 L12 16 L20 12.5 L16.5 8 L7.5 8 Z"
+    fill="#ffffff"
+    stroke="#121212"
+    stroke-width="1.8"
+    stroke-linejoin="round"
+  />
   
-  <!-- Plunger collar -->
-  <rect x="9.5" y="8" width="5" height="2" rx="0.5" fill="#ffffff" stroke="#121212" />
+  <!-- Front-left and Front-right housing divide line -->
+  <path
+    d="M12 16 L12 11.5"
+    stroke="#121212"
+    stroke-width="1.8"
+  />
 
-  <!-- Switch Stem (+) in emerald green -->
-  <path d="M12 3v5" stroke="#10b981" stroke-width="2.5" />
-  <path d="M9.5 5.5h5" stroke="#10b981" stroke-width="2.5" />
+  <!-- Front latch/tab (triangular/trapezoidal notch in Cherry MX switch) -->
+  <path
+    d="M10 12.5 L14 12.5 L13 15 L11 15 Z"
+    fill="#ffffff"
+    stroke="#121212"
+    stroke-width="1.2"
+    stroke-linejoin="miter"
+  />
+  <circle cx="12" cy="13.7" r="0.6" fill="#121212" stroke="none" />
+
+  <!-- Center top opening (Black square chimney hole) -->
+  <path
+    d="M8.5 8 L12 9.2 L15.5 8 L12 6.8 Z"
+    fill="#121212"
+    stroke="#121212"
+    stroke-width="1.5"
+  />
+
+  <!-- Switch Stem (White MX cross plunger) -->
+  <path
+    d="M10 4 L12 5 L14 4 L14 8 L10 8 Z"
+    fill="#ffffff"
+    stroke="#121212"
+    stroke-width="1.2"
+  />
+  <!-- Stem cross plunger details -->
+  <path d="M12 3 L12 7.5" stroke="#121212" stroke-width="1.6" />
+  <path d="M10 5.2 L14 5.2" stroke="#121212" stroke-width="1.6" />
 </svg>

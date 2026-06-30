@@ -88,6 +88,10 @@ export class CreateSetupDto {
   @IsOptional()
   plate_material?: string;
 
+  @IsString()
+  @IsOptional()
+  case_material?: string;
+
   @IsArray()
   @IsString({ each: true })
   @IsOptional()

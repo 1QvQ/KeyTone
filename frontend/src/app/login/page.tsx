@@ -22,8 +22,8 @@ export default function LoginPage() {
 
     try {
       const response = await api.post('/auth/login', { email, password });
-      localStorage.setItem('keytone_token', response.access_token);
-      localStorage.setItem('keytone_user', JSON.stringify(response.user));
+      sessionStorage.setItem('keytone_token', response.access_token);
+      sessionStorage.setItem('keytone_user', JSON.stringify(response.user));
       router.push('/dashboard');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to login');

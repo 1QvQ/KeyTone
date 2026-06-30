@@ -312,6 +312,16 @@ export default function SetupDetailPage() {
                   </div>
                 </div>
 
+                {/* Case Material */}
+                <div className="space-y-2 border-l-2 border-slate-900 pl-4">
+                  <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">
+                    Case Material
+                  </span>
+                  <div className="text-xs font-bold text-slate-950 uppercase tracking-wider">
+                    {setup.case_material || 'N/A'}
+                  </div>
+                </div>
+
                 {/* Dampeners / Foams */}
                 <div className="space-y-2 border-l-2 border-slate-900 pl-4">
                   <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">

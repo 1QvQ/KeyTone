@@ -40,6 +40,7 @@ export interface Setup {
   typing_feel: number;
   favourite: boolean;
   notes: string | null;
+  case_material?: string;
   switches: KeyboardSwitch[];
   keycaps: Keycap[];
   plates: Plate[];

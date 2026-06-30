@@ -29,6 +29,7 @@ function NewSetupForm() {
   const [description, setDescription] = useState('');
   const [favourite, setFavourite] = useState(false);
   const [notes, setNotes] = useState('');
+  const [caseMaterial, setCaseMaterial] = useState('Aluminum');
 
   // 2. Switch configuration state
   const [switchBrand, setSwitchBrand] = useState('');
@@ -98,6 +99,7 @@ function NewSetupForm() {
           material: keycapMaterial,
         } : undefined,
         plate_material: plateMaterial || undefined,
+        case_material: caseMaterial || undefined,
         foams: selectedFoams,
         sound_tags: selectedTags,
       };
@@ -187,6 +189,28 @@ function NewSetupForm() {
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 border-2 border-slate-900 focus:bg-white focus:ring-1 focus:ring-slate-900 outline-none text-xs text-slate-900 placeholder:text-slate-400 font-geek"
                 />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div>
+                <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                  Case Material
+                </label>
+                <select
+                  value={caseMaterial}
+                  onChange={(e) => setCaseMaterial(e.target.value)}
+                  className="w-full px-3 py-2 bg-slate-50 border-2 border-slate-900 focus:bg-white focus:ring-1 focus:ring-slate-900 outline-none text-xs text-slate-900 cursor-pointer font-geek"
+                >
+                  <option value="Aluminum">Aluminum</option>
+                  <option value="Plastic (ABS)">Plastic (ABS)</option>
+                  <option value="Polycarbonate (PC)">Polycarbonate (PC)</option>
+                  <option value="Acrylic">Acrylic</option>
+                  <option value="Wood">Wood</option>
+                  <option value="Carbon Fiber">Carbon Fiber</option>
+                  <option value="Resin">Resin</option>
+                  <option value="Unknown/Other">Unknown / Other</option>
+                </select>
               </div>
             </div>
 

@@ -22,7 +22,7 @@ export function resolveUrl(path: string | null | undefined): string {
 }
 
 async function request(endpoint: string, options: RequestInit = {}) {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('keytone_token') : null;
+  const token = typeof window !== 'undefined' ? sessionStorage.getItem('keytone_token') : null;
   
   const headers = new Headers(options.headers || {});
   

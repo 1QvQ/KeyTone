@@ -42,10 +42,11 @@ model Setup {
   description String?
   typing_feel Int              @default(5)
   favourite   Boolean          @default(false)
-  notes       String?
-  created_at  DateTime         @default(now())
+  notes         String?
+  case_material String?
+  created_at    DateTime         @default(now())
   
-  switches    KeyboardSwitch[]
+  switches      KeyboardSwitch[]
   keycaps     Keycaps[]
   plates      Plate[]
   foams       Foam[]

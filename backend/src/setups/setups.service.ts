@@ -9,7 +9,7 @@ import { UpdateSetupDto } from './dto/update-setup.dto';
 
 @Injectable()
 export class SetupsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(userId: string, dto: CreateSetupDto) {
     // Verify keyboard ownership
@@ -46,46 +46,47 @@ export class SetupsService {
         typing_feel: dto.typing_feel ?? 5,
         favourite: dto.favourite ?? false,
         notes: dto.notes,
+        case_material: dto.case_material,
         keyboard: {
           connect: { id: dto.keyboard_id },
         },
         switches: dto.switches
           ? {
-              create: {
-                brand: dto.switches.brand,
-                model: dto.switches.model,
-                lubed: dto.switches.lubed ?? false,
-                filmed: dto.switches.filmed ?? false,
-                spring: dto.switches.spring,
-              },
-            }
+            create: {
+              brand: dto.switches.brand,
+              model: dto.switches.model,
+              lubed: dto.switches.lubed ?? false,
+              filmed: dto.switches.filmed ?? false,
+              spring: dto.switches.spring,
+            },
+          }
           : undefined,
         keycaps: dto.keycaps
           ? {
-              create: {
-                brand: dto.keycaps.brand,
-                profile: dto.keycaps.profile,
-                material: dto.keycaps.material,
-              },
-            }
+            create: {
+              brand: dto.keycaps.brand,
+              profile: dto.keycaps.profile,
+              material: dto.keycaps.material,
+            },
+          }
           : undefined,
         plates: dto.plate_material
           ? {
-              create: {
-                material: dto.plate_material,
-              },
-            }
+            create: {
+              material: dto.plate_material,
+            },
+          }
           : undefined,
         foams: dto.foams
           ? {
-              create: dto.foams.map((type) => ({ type })),
-            }
+            create: dto.foams.map((type) => ({ type })),
+          }
           : undefined,
         sound_tags:
           tagConnections.length > 0
             ? {
-                create: tagConnections,
-              }
+              create: tagConnections,
+            }
             : undefined,
       },
       include: {
@@ -145,6 +146,7 @@ export class SetupsService {
       typing_feel: dto.typing_feel,
       favourite: dto.favourite,
       notes: dto.notes,
+      case_material: dto.case_material,
     };
 
     // Handle nested switch update
