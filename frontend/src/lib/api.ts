@@ -4,14 +4,16 @@ if (!BACKEND_URL) {
   console.warn('[api] NEXT_PUBLIC_BACKEND_URL not set, falling back to default.');
 }
 
-const BASE_URL = BACKEND_URL || 'http://localhost:3001';
+// Strip trailing slash from BASE_URL to prevent double-slashes in requests
+const BASE_URL = (BACKEND_URL || 'http://localhost:3001').replace(/\/$/, '');
 
 export function resolveUrl(path: string | null | undefined): string {
   if (!path) return '';
   if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
     return path;
   }
-  return `${BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${BASE_URL}${cleanPath}`;
 }
 
 async function request(endpoint: string, options: RequestInit = {}) {
@@ -27,7 +29,8 @@ async function request(endpoint: string, options: RequestInit = {}) {
     headers.set('Content-Type', 'application/json');
   }
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const response = await fetch(`${BASE_URL}${cleanEndpoint}`, {
     ...options,
     headers,
   });
