@@ -254,7 +254,7 @@ export default function DashboardPage() {
                     className="geek-card p-4 flex items-start gap-4 hover:border-emerald-500/80 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-white"
                   >
                     <div className="w-8 h-8 border-2 border-slate-900 bg-slate-50 flex items-center justify-center shrink-0">
-                      {(s.audio_files as Record<string, any>[] | undefined)?.length > 0 ? (
+                      {((s.audio_files as Record<string, any>[] | undefined)?.length ?? 0) > 0 ? (
                         <Volume2 className="w-4 h-4 text-emerald-600" />
                       ) : (
                         <Layers className="w-4 h-4 text-slate-600" />
@@ -271,7 +271,7 @@ export default function DashboardPage() {
                       <span className="text-[10px] text-slate-500 uppercase tracking-wider block truncate mt-0.5">
                         {(s.keyboard as Record<string, any>)?.brand as string} {(s.keyboard as Record<string, any>)?.name as string}
                       </span>
-                      {(s.switches as Record<string, any>[] | undefined)?.length > 0 && (
+                      {((s.switches as Record<string, any>[] | undefined)?.length ?? 0) > 0 && (
                         <span className="inline-block mt-1.5 px-2 py-0.5 border border-slate-900 bg-slate-50 text-[9px] text-slate-700 font-bold uppercase tracking-wider">
                           {((s.switches as Record<string, any>[])[0]).brand as string} {((s.switches as Record<string, any>[])[0]).model as string}
                         </span>

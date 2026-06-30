@@ -12,11 +12,11 @@ export default function LandingPage() {
   // Web Audio Synth for typing clicks
   const playSynthSound = (type: 'thock' | 'clack') => {
     if (typeof window === 'undefined') return;
-    const AudioContext = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    if (!AudioContext) return;
+    const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: any }).webkitAudioContext;
+    if (!AudioCtx) return;
 
     try {
-      const ctx = new AudioContext();
+      const ctx = new AudioCtx();
 
       // Create short white noise click
       const bufferSize = ctx.sampleRate * 0.08; // 80ms duration
