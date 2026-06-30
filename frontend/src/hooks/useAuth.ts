@@ -9,33 +9,23 @@ export function useAuth(requireAuth: boolean = true) {
   const router = useRouter();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const token = localStorage.getItem('keytone_token');
-      if (!token) {
-        setLoading(false);
-        if (requireAuth) {
-          router.push('/login');
-        }
-        return;
+    const token = localStorage.getItem('keytone_token');
+    if (!token) {
+      setLoading(false);
+      if (requireAuth) {
+        router.push('/login');
       }
+      return;
+    }
 
+    const cached = localStorage.getItem('keytone_user');
+    if (cached) {
       try {
-        const userData = await api.get('/auth/me') as User;
-        setUser(userData);
-        localStorage.setItem('keytone_user', JSON.stringify(userData));
-      } catch (err) {
-        console.error('Auth verification failed', err);
-        localStorage.removeItem('keytone_token');
-        localStorage.removeItem('keytone_user');
-        if (requireAuth) {
-          router.push('/login');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+        setUser(JSON.parse(cached) as User);
+      } catch {}
+    }
 
-    checkAuth();
+    setLoading(false);
   }, [router, requireAuth]);
 
   const logout = () => {
