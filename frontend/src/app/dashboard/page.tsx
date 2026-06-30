@@ -183,25 +183,25 @@ export default function DashboardPage() {
                             <KeyboardIcon className="w-4.5 h-4.5 text-slate-900" />
                           </div>
                           <span className="text-[10px] text-gray-500 font-bold tracking-widest uppercase mt-1">
-                            {k.layout} Layout
+                            {k.layout as string} Layout
                           </span>
                         </div>
                       )}
                       <div className="absolute top-3 right-3 px-2 py-0.5 border-2 border-slate-900 bg-white text-[9px] text-slate-900 font-bold uppercase tracking-wider shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)]">
-                        {k.layout}
+                        {k.layout as string}
                       </div>
                     </div>
 
                     <div className="p-5 flex-1 flex flex-col justify-between gap-4 bg-white">
                       <div>
                         <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-0.5">
-                          {k.brand}
+                          {k.brand as string}
                         </span>
                         <h3 className="text-sm font-bold text-slate-900 uppercase font-pixel tracking-wider leading-tight">
                           {k.name as string}
                         </h3>
                         <p className="text-[10px] text-slate-500 uppercase mt-1 font-bold">
-                          Colour: {k.colour}
+                          Colour: {k.colour as string}
                         </p>
                       </div>
 
@@ -270,11 +270,11 @@ export default function DashboardPage() {
                         {s.name as string}
                       </Link>
                       <span className="text-[10px] text-slate-500 uppercase tracking-wider block truncate mt-0.5">
-                        {(s.keyboard as Record<string, unknown>)?.brand} {(s.keyboard as Record<string, unknown>)?.name}
+                        {(s.keyboard as Record<string, unknown>)?.brand as string} {(s.keyboard as Record<string, unknown>)?.name as string}
                       </span>
                       {(s.switches as Record<string, unknown>[] | undefined)?.length > 0 && (
                         <span className="inline-block mt-1.5 px-2 py-0.5 border border-slate-900 bg-slate-50 text-[9px] text-slate-700 font-bold uppercase tracking-wider">
-                          {((s.switches as Record<string, unknown>[])[0]).brand} {((s.switches as Record<string, unknown>[])[0]).model}
+                          {((s.switches as Record<string, unknown>[])[0]).brand as string} {((s.switches as Record<string, unknown>[])[0]).model as string}
                         </span>
                       )}
                     </div>
