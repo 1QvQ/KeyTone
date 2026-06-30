@@ -1,4 +1,9 @@
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+let BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+// Handle cases where the environment variable is literally the string '""' or "''" (often happens in Vercel settings)
+if (BACKEND_URL === '""' || BACKEND_URL === "''") {
+  BACKEND_URL = '';
+}
 
 if (!BACKEND_URL) {
   console.warn('[api] NEXT_PUBLIC_BACKEND_URL not set, falling back to default.');
