@@ -164,7 +164,7 @@ export default function DashboardPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {keyboards.map((kb: Record<string, unknown>) => (
                   <div
-                    key={kb.id}
+                    key={kb.id as string}
                     className="geek-card flex flex-col justify-between group shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                   >
                     {/* Keyboard Visual Card */}
