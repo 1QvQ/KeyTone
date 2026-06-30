@@ -30,6 +30,7 @@ model Keyboard {
   created_at DateTime @default(now())
   setups     Setup[]
 
+  @@index([user_id])
   @@map("keyboards")
 }
 
@@ -52,6 +53,7 @@ model Setup {
   images      SetupImage[]
   sound_tags  SetupSoundTag[]
 
+  @@index([keyboard_id])
   @@map("setups")
 }
 
@@ -65,6 +67,7 @@ model KeyboardSwitch {
   filmed   Boolean @default(false)
   spring   String?
 
+  @@index([setup_id])
   @@map("switches")
 }
 
@@ -76,6 +79,7 @@ model Keycaps {
   profile  String
   material String
 
+  @@index([setup_id])
   @@map("keycaps")
 }
 
@@ -85,6 +89,7 @@ model Plate {
   setup    Setup  @relation(fields: [setup_id], references: [id], onDelete: Cascade)
   material String
 
+  @@index([setup_id])
   @@map("plates")
 }
 
@@ -94,6 +99,7 @@ model Foam {
   setup    Setup  @relation(fields: [setup_id], references: [id], onDelete: Cascade)
   type     String
 
+  @@index([setup_id])
   @@map("foams")
 }
 
@@ -107,6 +113,7 @@ model AudioFile {
   size        Int      
   uploaded_at DateTime @default(now())
 
+  @@index([setup_id])
   @@map("audio_files")
 }
 
@@ -117,6 +124,7 @@ model SetupImage {
   image_url String
   caption   String?
 
+  @@index([setup_id])
   @@map("images")
 }
 
@@ -135,5 +143,6 @@ model SetupSoundTag {
   tag      SoundTag @relation(fields: [tag_id], references: [id], onDelete: Cascade)
 
   @@id([setup_id, tag_id])
+  @@index([tag_id])
   @@map("setup_sound_tags")
 }

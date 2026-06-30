@@ -1,11 +1,20 @@
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:3001';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+if (!BACKEND_URL) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('NEXT_PUBLIC_BACKEND_URL environment variable is required in production');
+  }
+  console.warn('[api] NEXT_PUBLIC_BACKEND_URL not set, falling back to default for development');
+}
+
+const BASE_URL = BACKEND_URL || 'http://127.0.0.1:3001';
 
 export function resolveUrl(path: string | null | undefined): string {
   if (!path) return '';
   if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
     return path;
   }
-  return `${BACKEND_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+  return `${BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
 }
 
 async function request(endpoint: string, options: RequestInit = {}) {
@@ -21,7 +30,7 @@ async function request(endpoint: string, options: RequestInit = {}) {
     headers.set('Content-Type', 'application/json');
   }
 
-  const response = await fetch(`${BACKEND_URL}${endpoint}`, {
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
     ...options,
     headers,
   });
