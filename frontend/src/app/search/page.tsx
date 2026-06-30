@@ -225,7 +225,7 @@ export default function SearchPage() {
             {/* Favorite toggle */}
             <div className="space-y-1.5">
               <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">
-                Favorites
+                Favourites
               </label>
               <select
                 value={favourite}
@@ -233,7 +233,7 @@ export default function SearchPage() {
                 className="w-full px-3 py-2 bg-slate-50 border-2 border-slate-900 focus:bg-white focus:ring-1 focus:ring-slate-900 outline-none text-xs text-slate-900 cursor-pointer font-geek"
               >
                 <option value="">All Setups</option>
-                <option value="true">Favorites Only</option>
+                <option value="true">Favourites Only</option>
               </select>
             </div>
           </div>

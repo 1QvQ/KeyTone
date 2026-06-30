@@ -235,7 +235,7 @@ export default function SetupDetailPage() {
               className={`p-3 border-2 border-slate-900 bg-white hover:bg-slate-50 transition-all cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[0px_0px_0px_0px] ${
                 setup.favourite ? 'text-rose-600 border-rose-600 shadow-[2px_2px_0px_0px_rgba(225,29,72,1)] bg-rose-50' : 'text-slate-600'
               }`}
-              title={setup.favourite ? 'Remove Favorite' : 'Mark Favorite'}
+              title={setup.favourite ? 'Remove Favourite' : 'Mark Favourite'}
             >
               <Heart className={`w-4.5 h-4.5 ${setup.favourite ? 'fill-rose-500' : ''}`} />
             </button>
@@ -266,7 +266,7 @@ export default function SetupDetailPage() {
                 {/* Switches */}
                 <div className="space-y-2 border-l-2 border-slate-900 pl-4">
                   <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">
-                    Switches (轴体)
+                    Switches
                   </span>
                   <div className="text-xs font-bold text-slate-950 uppercase tracking-wider">
                     {sw ? `${sw.brand} ${sw.model}` : 'Not Specified'}
@@ -282,7 +282,7 @@ export default function SetupDetailPage() {
                 {/* Keycaps */}
                 <div className="space-y-2 border-l-2 border-slate-900 pl-4">
                   <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">
-                    Keycaps (键帽)
+                    Keycaps
                   </span>
                   <div className="text-xs font-bold text-slate-950 uppercase tracking-wider">
                     {kc ? `${kc.brand} ${kc.profile}` : 'Not Specified'}
@@ -297,7 +297,7 @@ export default function SetupDetailPage() {
                 {/* Plates */}
                 <div className="space-y-2 border-l-2 border-slate-900 pl-4">
                   <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">
-                    Plate (定位板)
+                    Plate
                   </span>
                   <div className="text-xs font-bold text-slate-950 uppercase tracking-wider">
                     {pl?.material || 'Plateless'}
@@ -330,7 +330,7 @@ export default function SetupDetailPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t-2 border-slate-900 border-dashed">
                 <div>
                   <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-2">
-                    Typing Feel (手感)
+                    Typing Feel
                   </span>
                   <div className="flex items-center gap-3">
                     <div className="flex-1 bg-slate-100 border-2 border-slate-900 h-3 relative overflow-hidden">
@@ -347,7 +347,7 @@ export default function SetupDetailPage() {
 
                 <div>
                   <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-2">
-                    Sound Tags (声音标签)
+                    Sound Tags
                   </span>
                   {setup.sound_tags && setup.sound_tags.length > 0 ? (
                     <div className="flex flex-wrap gap-1.5">

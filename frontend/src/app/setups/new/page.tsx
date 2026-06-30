@@ -199,7 +199,7 @@ function NewSetupForm() {
                 className="w-4 h-4 border-2 border-slate-900 text-slate-900 focus:ring-slate-900 cursor-pointer"
               />
               <label htmlFor="favourite" className="text-xs font-bold text-slate-800 uppercase tracking-wider cursor-pointer select-none">
-                Mark as Favorite configuration
+                Mark as Favourite configuration
               </label>
             </div>
           </div>

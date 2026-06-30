@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Keyboard, Search, GitCompare, LogOut, User } from 'lucide-react';
+import { KeySwitchIcon } from './icons/KeySwitchIcon';
 
 interface NavbarProps {
   user: any;
@@ -26,8 +27,8 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
           {/* Logo */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 bg-slate-900 flex items-center justify-center border-2 border-slate-900 group-hover:bg-emerald-500 group-hover:text-slate-900 text-white transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] group-hover:shadow-[2px_2px_0px_0px_rgba(16,185,129,0.3)]">
-                <Keyboard className="w-4.5 h-4.5" />
+              <div className="w-8 h-8 bg-white flex items-center justify-center border-2 border-slate-900 group-hover:bg-emerald-500 transition-all shadow-[2px_2px_0px_0px_rgba(18,18,18,1)]">
+                <KeySwitchIcon className="w-4.5 h-4.5" />
               </div>
               <span className="text-lg font-pixel tracking-wide text-slate-900 group-hover:text-emerald-600 transition-colors uppercase">
                 KeyTone

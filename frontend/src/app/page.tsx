@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Keyboard, Music, GitCompare, ArrowRight, Volume2 } from 'lucide-react';
+import { KeySwitchIcon } from '../components/icons/KeySwitchIcon';
 
 export default function LandingPage() {
   const [soundType, setSoundType] = useState<'thock' | 'clack'>('thock');
@@ -13,10 +14,10 @@ export default function LandingPage() {
     if (typeof window === 'undefined') return;
     const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
     if (!AudioContext) return;
-    
+
     try {
       const ctx = new AudioContext();
-      
+
       // Create short white noise click
       const bufferSize = ctx.sampleRate * 0.08; // 80ms duration
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
@@ -24,18 +25,18 @@ export default function LandingPage() {
       for (let i = 0; i < bufferSize; i++) {
         data[i] = Math.random() * 2 - 1;
       }
-      
+
       const noise = ctx.createBufferSource();
       noise.buffer = buffer;
-      
+
       // Lowpass/Bandpass filter
       const filter = ctx.createBiquadFilter();
       filter.type = 'bandpass';
-      
+
       // Sine wave for the deep bottom-out tone
       const osc = ctx.createOscillator();
       const oscGain = ctx.createGain();
-      
+
       if (type === 'thock') {
         filter.frequency.setValueAtTime(320, ctx.currentTime);
         filter.Q.setValueAtTime(8, ctx.currentTime);
@@ -51,20 +52,20 @@ export default function LandingPage() {
         oscGain.gain.setValueAtTime(0.7, ctx.currentTime);
         oscGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
       }
-      
+
       const noiseGain = ctx.createGain();
       noiseGain.gain.setValueAtTime(type === 'thock' ? 0.03 : 0.12, ctx.currentTime);
       noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (type === 'thock' ? 0.07 : 0.04));
-      
+
       osc.type = 'sine';
-      
+
       noise.connect(filter);
       filter.connect(noiseGain);
       noiseGain.connect(ctx.destination);
-      
+
       osc.connect(oscGain);
       oscGain.connect(ctx.destination);
-      
+
       noise.start();
       osc.start();
       noise.stop(ctx.currentTime + 0.08);
@@ -93,8 +94,8 @@ export default function LandingPage() {
       {/* Header */}
       <header className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between z-10 border-b-2 border-slate-900 bg-white">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-slate-900 flex items-center justify-center text-white border-2 border-slate-900">
-            <Keyboard className="w-4.5 h-4.5" />
+          <div className="w-8 h-8 bg-white flex items-center justify-center border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(18,18,18,1)]">
+            <KeySwitchIcon className="w-4.5 h-4.5" />
           </div>
           <span className="text-base font-pixel tracking-wide uppercase">KeyTone</span>
         </div>
@@ -117,10 +118,10 @@ export default function LandingPage() {
 
       {/* Main Hero Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center py-12 md:py-20 z-10 gap-16">
-        
+
         {/* Two column Grid on desktop */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Column: Heading and info */}
           <div className="lg:col-span-5 space-y-6 text-left">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 border-2 border-emerald-500 text-xs font-bold text-emerald-800 uppercase tracking-wider">
@@ -162,26 +163,24 @@ export default function LandingPage() {
                 <span className="text-[10px] font-bold text-slate-900 font-pixel">
                   [ SYNTHESIS BOARD LOGGER ]
                 </span>
-                
+
                 {/* Switch Sound Profile Selectors */}
                 <div className="flex items-center gap-2 text-[9px] font-bold">
                   <button
                     onClick={() => setSoundType('thock')}
-                    className={`px-2 py-0.5 border transition-all cursor-pointer ${
-                      soundType === 'thock'
+                    className={`px-2 py-0.5 border transition-all cursor-pointer ${soundType === 'thock'
                         ? 'bg-slate-900 text-white border-slate-900'
                         : 'bg-slate-100 text-slate-700 border-slate-300 hover:border-slate-500'
-                    }`}
+                      }`}
                   >
                     THOCK
                   </button>
                   <button
                     onClick={() => setSoundType('clack')}
-                    className={`px-2 py-0.5 border transition-all cursor-pointer ${
-                      soundType === 'clack'
+                    className={`px-2 py-0.5 border transition-all cursor-pointer ${soundType === 'clack'
                         ? 'bg-slate-900 text-white border-slate-900'
                         : 'bg-slate-100 text-slate-700 border-slate-300 hover:border-slate-500'
-                    }`}
+                      }`}
                   >
                     CLACK
                   </button>
@@ -196,15 +195,14 @@ export default function LandingPage() {
                     <button
                       key={k}
                       onClick={() => handleKeyPress(k)}
-                      className={`flex-1 py-2 text-[9px] font-bold border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${
-                        activeKey === k
+                      className={`flex-1 py-2 text-[9px] font-bold border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${activeKey === k
                           ? 'bg-emerald-500 text-slate-950 font-black'
                           : k === 'ESC'
-                          ? 'bg-orange-400 text-slate-950'
-                          : k === 'BS'
-                          ? 'bg-slate-300 text-slate-800 flex-[1.5]'
-                          : 'bg-white text-slate-900'
-                      }`}
+                            ? 'bg-orange-400 text-slate-950'
+                            : k === 'BS'
+                              ? 'bg-slate-300 text-slate-800 flex-[1.5]'
+                              : 'bg-white text-slate-900'
+                        }`}
                     >
                       {k}
                     </button>
@@ -217,13 +215,12 @@ export default function LandingPage() {
                     <button
                       key={k}
                       onClick={() => handleKeyPress(k)}
-                      className={`flex-1 py-2 text-[9px] font-bold border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${
-                        activeKey === k
+                      className={`flex-1 py-2 text-[9px] font-bold border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${activeKey === k
                           ? 'bg-emerald-500 text-slate-950 font-black'
                           : k === 'TAB'
-                          ? 'bg-slate-300 text-slate-800 flex-[1.5]'
-                          : 'bg-white text-slate-900'
-                      }`}
+                            ? 'bg-slate-300 text-slate-800 flex-[1.5]'
+                            : 'bg-white text-slate-900'
+                        }`}
                     >
                       {k}
                     </button>
@@ -236,15 +233,14 @@ export default function LandingPage() {
                     <button
                       key={k}
                       onClick={() => handleKeyPress(k)}
-                      className={`flex-1 py-2 text-[9px] font-bold border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${
-                        activeKey === k
+                      className={`flex-1 py-2 text-[9px] font-bold border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${activeKey === k
                           ? 'bg-emerald-500 text-slate-950 font-black'
                           : k === 'CAPS'
-                          ? 'bg-slate-300 text-slate-800 flex-[1.8]'
-                          : k === 'ENT'
-                          ? 'bg-slate-800 text-white flex-[1.8]'
-                          : 'bg-white text-slate-900'
-                      }`}
+                            ? 'bg-slate-300 text-slate-800 flex-[1.8]'
+                            : k === 'ENT'
+                              ? 'bg-slate-800 text-white flex-[1.8]'
+                              : 'bg-white text-slate-900'
+                        }`}
                     >
                       {k}
                     </button>
@@ -257,13 +253,12 @@ export default function LandingPage() {
                     <button
                       key={k}
                       onClick={() => handleKeyPress(k)}
-                      className={`flex-1 py-2 text-[9px] font-bold border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${
-                        activeKey === k
+                      className={`flex-1 py-2 text-[9px] font-bold border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${activeKey === k
                           ? 'bg-emerald-500 text-slate-950 font-black'
                           : k.includes('SHFT')
-                          ? 'bg-slate-300 text-slate-800 flex-[2]'
-                          : 'bg-white text-slate-900'
-                      }`}
+                            ? 'bg-slate-300 text-slate-800 flex-[2]'
+                            : 'bg-white text-slate-900'
+                        }`}
                     >
                       {k}
                     </button>
@@ -286,9 +281,8 @@ export default function LandingPage() {
                   </button>
                   <button
                     onClick={() => handleKeyPress('SPACE')}
-                    className={`flex-[6] py-2 border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${
-                      activeKey === 'SPACE' ? 'bg-emerald-500' : 'bg-emerald-400'
-                    }`}
+                    className={`flex-[6] py-2 border border-slate-900 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-y-[0.5px] active:shadow-none cursor-pointer transition-all ${activeKey === 'SPACE' ? 'bg-emerald-500' : 'bg-emerald-400'
+                      }`}
                   />
                   <button
                     onClick={() => handleKeyPress('ALT')}

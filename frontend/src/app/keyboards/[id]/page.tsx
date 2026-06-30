@@ -179,7 +179,7 @@ export default function KeyboardDetailPage() {
                 Layout: {keyboard.layout}
               </span>
               <span className="px-3 py-1 border-2 border-slate-900 bg-white">
-                Color: {keyboard.colour}
+                Colour: {keyboard.colour}
               </span>
               <span className="px-3 py-1 border-2 border-slate-900 bg-white">
                 Setups: {keyboard.setups?.length || 0}
@@ -254,7 +254,7 @@ export default function KeyboardDetailPage() {
                       <button
                         onClick={() => toggleFavorite(setup.id, setup.favourite)}
                         className="p-1 text-slate-400 hover:text-rose-500 transition-colors cursor-pointer"
-                        title={setup.favourite ? 'Remove from favorites' : 'Add to favorites'}
+                        title={setup.favourite ? 'Remove from favourites' : 'Add to favourites'}
                       >
                         <Heart
                           className={`w-5 h-5 ${
@@ -450,7 +450,7 @@ export default function KeyboardDetailPage() {
 
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-                    Color / Finish
+                    Colour / Finish
                   </label>
                   <input
                     type="text"

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#121212" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bottom base pins -->
+  <path d="M6 19v3" stroke="#64748b" />
+  <path d="M18 19v3" stroke="#64748b" />
+  
+  <!-- Base plate -->
+  <path d="M3 19h18" stroke="#121212" stroke-width="2.5" />
+
+  <!-- Main housing (white filled trapezoid) -->
+  <path d="M4 19l2.5-9h11l2.5 9Z" fill="#ffffff" stroke="#121212" />
+  
+  <!-- Plunger collar -->
+  <rect x="9.5" y="8" width="5" height="2" rx="0.5" fill="#ffffff" stroke="#121212" />
+
+  <!-- Switch Stem (+) in emerald green -->
+  <path d="M12 3v5" stroke="#10b981" stroke-width="2.5" />
+  <path d="M9.5 5.5h5" stroke="#10b981" stroke-width="2.5" />
+</svg>

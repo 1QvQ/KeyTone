@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { api } from '@/lib/api';
 import { Keyboard, Lock, Mail, Loader2, AlertCircle, ArrowLeft } from 'lucide-react';
+import { KeySwitchIcon } from '../../components/icons/KeySwitchIcon';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -47,8 +48,8 @@ export default function LoginPage() {
 
         {/* Logo */}
         <div className="w-full flex flex-col items-center mb-6">
-          <div className="w-10 h-10 bg-slate-900 border-2 border-slate-900 flex items-center justify-center text-white mb-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)]">
-            <Keyboard className="w-5 h-5" />
+          <div className="w-10 h-10 bg-white border-2 border-slate-900 flex items-center justify-center mb-2 shadow-[2px_2px_0px_0px_rgba(18,18,18,1)]">
+            <KeySwitchIcon className="w-5 h-5" />
           </div>
           <h1 className="text-xl font-bold tracking-wide font-pixel uppercase text-slate-900">KeyTone</h1>
           <p className="text-slate-500 mt-1 text-xs uppercase tracking-wider text-center">

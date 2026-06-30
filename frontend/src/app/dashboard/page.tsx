@@ -125,7 +125,7 @@ export default function DashboardPage() {
             { label: 'Keyboards', value: stats.keyboards, icon: KeyboardIcon, color: 'text-slate-900 bg-slate-100' },
             { label: 'Setups (Configs)', value: stats.setups, icon: Layers, color: 'text-slate-900 bg-slate-100' },
             { label: 'Sound Library', value: stats.audioFiles, icon: Music, color: 'text-emerald-600 bg-emerald-50' },
-            { label: 'Favorites', value: stats.favorites, icon: Heart, color: 'text-rose-600 bg-rose-50' },
+            { label: 'Favourites', value: stats.favorites, icon: Heart, color: 'text-rose-600 bg-rose-50' },
           ].map((item, index) => {
             const Icon = item.icon;
             return (
@@ -199,7 +199,7 @@ export default function DashboardPage() {
                           {kb.name}
                         </h3>
                         <p className="text-[10px] text-slate-500 uppercase mt-1 font-bold">
-                          Color: {kb.colour}
+                          Colour: {kb.colour}
                         </p>
                       </div>
 
@@ -225,7 +225,7 @@ export default function DashboardPage() {
                 </div>
                 <h3 className="text-xs font-bold text-slate-900 uppercase font-pixel mb-1">No Keyboards logged</h3>
                 <p className="text-[10px] text-slate-500 uppercase tracking-wider max-w-xs leading-relaxed">
-                  Start by adding your mechanical keyboard frame parameters to begin customization logging.
+                  Start by adding your mechanical keyboard frame parameters to begin customisation logging.
                 </p>
                 <button
                   onClick={() => setIsModalOpen(true)}
@@ -368,7 +368,7 @@ export default function DashboardPage() {
 
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-                    Color / Finish
+                    Colour / Finish
                   </label>
                   <input
                     type="text"
