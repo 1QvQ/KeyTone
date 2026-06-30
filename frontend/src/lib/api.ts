@@ -4,7 +4,7 @@ if (!BACKEND_URL) {
   console.warn('[api] NEXT_PUBLIC_BACKEND_URL not set, falling back to default.');
 }
 
-const BASE_URL = BACKEND_URL || 'http://127.0.0.1:3001';
+const BASE_URL = BACKEND_URL || 'http://localhost:3001';
 
 export function resolveUrl(path: string | null | undefined): string {
   if (!path) return '';
