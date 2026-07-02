@@ -9,6 +9,7 @@ import {
   UseGuards,
   ForbiddenException,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FilesService } from './files.service';
@@ -55,11 +56,26 @@ export class FilesController {
     @GetUser() user: any,
     @Body('setup_id') setupId: string,
     @Body('duration') duration: string,
+    @Body('acoustic_profile') acousticProfile: string,
+    @Body('dominant_freq') dominantFreq: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
     await this.verifySetupOwner(setupId, user.id);
     const durationNum = duration ? parseFloat(duration) : undefined;
-    return this.filesService.saveAudio(setupId, file, durationNum);
+    
+    // Validate acoustic profile to prevent injection or invalid data
+    const validProfiles = ['THOCKY', 'CREAMY', 'CLACKY', 'UNKNOWN'];
+    if (acousticProfile && !validProfiles.includes(acousticProfile)) {
+      throw new BadRequestException('Invalid acoustic profile tag');
+    }
+    
+    const freqNum = dominantFreq ? parseFloat(dominantFreq) : undefined;
+    // Validate frequency range (e.g. human hearing range 0-20000Hz)
+    if (freqNum !== undefined && (isNaN(freqNum) || freqNum < 0 || freqNum > 20000)) {
+      throw new BadRequestException('Invalid dominant frequency value');
+    }
+
+    return this.filesService.saveAudio(setupId, file, durationNum, acousticProfile, freqNum);
   }
 
   @Delete('image/:id')
