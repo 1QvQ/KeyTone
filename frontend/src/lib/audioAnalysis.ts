@@ -25,6 +25,18 @@ export async function analyzeAudioFile(file: File): Promise<AcousticAnalysisResu
     const ctx = new AudioCtx();
     const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
     
+    // 1. Find the first amplitude peak to avoid analyzing lead-in silence
+    const channelData = audioBuffer.getChannelData(0);
+    let peakIndex = 0;
+    const silenceThreshold = 0.05; // 5% volume threshold to detect keypress
+    for (let i = 0; i < channelData.length; i++) {
+      if (Math.abs(channelData[i]) > silenceThreshold) {
+        peakIndex = i;
+        break;
+      }
+    }
+    const peakTime = peakIndex / audioBuffer.sampleRate;
+    
     const source = ctx.createBufferSource();
     source.buffer = audioBuffer;
     
@@ -35,7 +47,8 @@ export async function analyzeAudioFile(file: File): Promise<AcousticAnalysisResu
     source.connect(analyser);
     // Note: Do NOT connect analyser to ctx.destination!
     
-    source.start(0);
+    // Start playback exactly at the peak time instead of 0
+    source.start(0, peakTime);
     
     // Wait for 150ms to capture the initial keystroke impact (the bottom-out sound)
     await new Promise((resolve) => setTimeout(resolve, 150));
