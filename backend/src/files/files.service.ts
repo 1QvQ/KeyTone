@@ -151,6 +151,8 @@ export class FilesService {
     setupId: string,
     file: Express.Multer.File,
     durationSeconds?: number,
+    acousticProfile?: string,
+    dominantFreq?: number,
   ) {
     if (!file) {
       throw new BadRequestException('No audio file provided');
@@ -211,6 +213,8 @@ export class FilesService {
         duration: durationSeconds ? Math.round(durationSeconds) : null,
         format: fileExt.replace('.', '').toUpperCase(),
         size: file.size,
+        acoustic_profile: acousticProfile || null,
+        dominant_freq: dominantFreq || null,
       },
     });
   }

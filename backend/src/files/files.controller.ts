@@ -55,11 +55,14 @@ export class FilesController {
     @GetUser() user: any,
     @Body('setup_id') setupId: string,
     @Body('duration') duration: string,
+    @Body('acoustic_profile') acousticProfile: string,
+    @Body('dominant_freq') dominantFreq: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
     await this.verifySetupOwner(setupId, user.id);
     const durationNum = duration ? parseFloat(duration) : undefined;
-    return this.filesService.saveAudio(setupId, file, durationNum);
+    const freqNum = dominantFreq ? parseFloat(dominantFreq) : undefined;
+    return this.filesService.saveAudio(setupId, file, durationNum, acousticProfile, freqNum);
   }
 
   @Delete('image/:id')

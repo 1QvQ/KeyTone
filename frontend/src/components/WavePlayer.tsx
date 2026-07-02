@@ -11,10 +11,12 @@ interface WavePlayerProps {
   duration?: number;
   format?: string;
   size?: number;
+  acousticProfile?: string;
+  dominantFreq?: number;
   onDelete?: () => void;
 }
 
-export default function WavePlayer({ url, filename, duration, format, size, onDelete }: WavePlayerProps) {
+export default function WavePlayer({ url, filename, duration, format, size, acousticProfile, dominantFreq, onDelete }: WavePlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const wavesurferRef = useRef<WaveSurfer | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -115,17 +117,58 @@ export default function WavePlayer({ url, filename, duration, format, size, onDe
         </div>
 
         {/* Timers & Info */}
-        <div className="flex items-center justify-between text-[10px] text-gray-500 font-bold tracking-wider mt-1.5 uppercase">
-          <div className="flex items-center gap-2">
-            <span>{currentTime}</span>
-            <span>/</span>
-            <span>{totalTime}</span>
+        <div className="flex flex-col gap-2 mt-2">
+          <div className="flex items-center justify-between text-[10px] text-gray-500 font-bold tracking-wider uppercase">
+            <div className="flex items-center gap-2">
+              <span>{currentTime}</span>
+              <span>/</span>
+              <span>{totalTime}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              {acousticProfile && (
+                <span className={`px-1.5 py-0.5 text-[8px] font-bold text-white uppercase tracking-widest ${
+                  acousticProfile === 'THOCKY' ? 'bg-slate-800' : 
+                  acousticProfile === 'CLACKY' ? 'bg-amber-600' : 'bg-emerald-600'
+                }`}>
+                  {acousticProfile}
+                </span>
+              )}
+              {dominantFreq && (
+                <span className="text-[9px] text-slate-500 font-bold uppercase">
+                  {dominantFreq}Hz
+                </span>
+              )}
+              {acousticProfile && <span>•</span>}
+              <span>{format || 'AUDIO'}</span>
+              <span>•</span>
+              <span>{size ? formatSize(size) : 'Unknown Size'}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <span>{format || 'AUDIO'}</span>
-            <span>•</span>
-            <span>{size ? formatSize(size) : 'Unknown Size'}</span>
-          </div>
+
+          {/* Acoustic Analysis Bar */}
+          {dominantFreq && (
+            <div className="flex flex-col gap-1 mt-1">
+              <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase tracking-widest">
+                <span>Thocky</span>
+                <span>Creamy</span>
+                <span>Clacky</span>
+              </div>
+              <div className="h-1.5 w-full bg-slate-100 border border-slate-900 relative">
+                {/* Gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-600 via-emerald-400 to-amber-500 opacity-20" />
+                {/* Marker */}
+                <div 
+                  className="absolute top-0 bottom-0 bg-slate-900 shadow-[1px_0px_0px_0px_rgba(0,0,0,0.5)]"
+                  style={{ 
+                    // Map 50Hz - 1000Hz to 0 - 100%
+                    left: `${Math.min(100, Math.max(0, ((dominantFreq - 50) / 950) * 100))}%`,
+                    width: '3px',
+                    marginLeft: '-1.5px'
+                  }}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

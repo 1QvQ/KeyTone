@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { api, resolveUrl } from '@/lib/api';
 import Navbar from '@/components/Navbar';
 import WavePlayer from '@/components/WavePlayer';
+import { analyzeAudioFile } from '@/lib/audioAnalysis';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Keyboard as KeyboardIcon,
@@ -100,12 +101,17 @@ export default function SetupDetailPage() {
       };
 
       const duration = await getDuration();
+      const analysis = await analyzeAudioFile(audioFile);
 
       const formData = new FormData();
       formData.append('file', audioFile);
       formData.append('setup_id', id);
       if (duration) {
         formData.append('duration', duration.toString());
+      }
+      if (analysis) {
+        formData.append('acoustic_profile', analysis.profile);
+        formData.append('dominant_freq', analysis.dominantFreq.toString());
       }
 
       await api.post('/files/audio/upload', formData);
@@ -417,6 +423,8 @@ export default function SetupDetailPage() {
                       duration={audio.duration}
                       format={audio.format}
                       size={audio.size}
+                      acousticProfile={audio.acoustic_profile}
+                      dominantFreq={audio.dominant_freq}
                       onDelete={() => handleDeleteAudio(audio.id)}
                     />
                   ))}

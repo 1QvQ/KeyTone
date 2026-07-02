@@ -105,14 +105,16 @@ model Foam {
 }
 
 model AudioFile {
-  id          String   @id @default(uuid())
-  setup_id    String
-  setup       Setup    @relation(fields: [setup_id], references: [id], onDelete: Cascade)
-  file_url    String
-  duration    Int?     
-  format      String
-  size        Int      
-  uploaded_at DateTime @default(now())
+  id               String   @id @default(uuid())
+  setup_id         String
+  setup            Setup    @relation(fields: [setup_id], references: [id], onDelete: Cascade)
+  file_url         String
+  duration         Int?     
+  format           String
+  size             Int      
+  acoustic_profile String?
+  dominant_freq    Float?
+  uploaded_at      DateTime @default(now())
 
   @@index([setup_id])
   @@map("audio_files")
