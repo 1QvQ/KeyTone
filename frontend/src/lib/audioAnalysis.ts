@@ -60,37 +60,34 @@ export async function analyzeAudioFile(file: File): Promise<AcousticAnalysisResu
     source.stop();
     await ctx.close();
     
-    // Calculate Spectral Centroid (Weighted Average Frequency)
-    let totalAmplitude = 0;
-    let weightedSum = 0;
-    const sampleRate = ctx.sampleRate;
-    
-    for (let i = 0; i < bufferLength; i++) {
-      // Nyquist frequency is sampleRate / 2
-      const freq = (i * (sampleRate / 2)) / bufferLength;
-      const amplitude = dataArray[i];
+    // Offload the heavy mathematical calculation to a separate Web Worker thread
+    // This prevents the massive array iteration from blocking the main UI thread
+    return new Promise((resolve) => {
+      const worker = new Worker(new URL('./acousticWorker.ts', import.meta.url));
       
-      // Filter out extreme lows (rumble) and extreme highs (hiss) to focus on the key switch sound
-      if (freq > 50 && freq < 10000 && amplitude > 0) {
-        weightedSum += freq * amplitude;
-        totalAmplitude += amplitude;
-      }
-    }
-    
-    if (totalAmplitude === 0) return null;
-    
-    const dominantFreq = Math.round(weightedSum / totalAmplitude);
-    
-    let profile = 'UNKNOWN';
-    if (dominantFreq <= ACOUSTIC_THRESHOLDS.THOCKY_MAX) {
-      profile = 'THOCKY';
-    } else if (dominantFreq <= ACOUSTIC_THRESHOLDS.CREAMY_MAX) {
-      profile = 'CREAMY';
-    } else {
-      profile = 'CLACKY';
-    }
-    
-    return { dominantFreq, profile };
+      worker.onmessage = (e) => {
+        worker.terminate(); // Clean up worker after it finishes
+        if (e.data.error) {
+          resolve(null);
+        } else {
+          resolve({ dominantFreq: e.data.dominantFreq, profile: e.data.profile });
+        }
+      };
+      
+      worker.onerror = (err) => {
+        console.error("Web Worker error:", err);
+        worker.terminate();
+        resolve(null);
+      };
+
+      // Send the massive frequency array to the background thread
+      worker.postMessage({
+        dataArray,
+        sampleRate: ctx.sampleRate,
+        bufferLength,
+        thresholds: ACOUSTIC_THRESHOLDS
+      });
+    });
   } catch (error) {
     console.error("Audio analysis failed:", error);
     return null;
