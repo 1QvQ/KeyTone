@@ -24,9 +24,9 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
   return (
     <nav className="bg-white border-b-2 border-slate-900 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex flex-wrap items-center justify-between py-3 sm:py-0 sm:h-16 gap-y-3">
           {/* Logo */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 order-1">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="w-8 h-8 bg-white flex items-center justify-center border-2 border-slate-900 group-hover:bg-emerald-500 transition-all shadow-[2px_2px_0px_0px_rgba(18,18,18,1)]">
                 <KeySwitchIcon className="w-4.5 h-4.5" />
@@ -37,7 +37,7 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
             </Link>
 
             {/* Menu Desktop */}
-            <div className="hidden sm:flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = pathname === item.href;
@@ -59,7 +59,7 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
           </div>
 
           {/* User controls */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 order-2">
             <div className="flex items-center gap-2 border-2 border-slate-900 bg-slate-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-slate-800">
               <div className="w-5 h-5 bg-slate-900 flex items-center justify-center text-white">
                 <User className="w-3 h-3 text-white" />
@@ -77,6 +77,27 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
               <LogOut className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Sign Out</span>
             </button>
+          </div>
+
+          {/* Menu Mobile */}
+          <div className="flex md:hidden w-full items-center gap-2 overflow-x-auto pb-1 order-3 no-scrollbar border-t-2 border-slate-100 pt-2">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex shrink-0 items-center gap-2 px-3 py-1.5 border-2 transition-all font-bold text-[10px] uppercase tracking-wider ${isActive
+                      ? 'bg-slate-900 text-white border-slate-900'
+                      : 'text-slate-700 bg-slate-50 border-slate-200'
+                    }`}
+                >
+                  <Icon className="w-3 h-3" />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
