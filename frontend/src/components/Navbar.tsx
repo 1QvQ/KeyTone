@@ -27,8 +27,8 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between py-3 sm:py-0 sm:h-16 gap-y-3">
           <div className="flex items-center gap-8 order-1">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="flex items-center gap-2.5 group"
               onClick={(e) => {
                 // On mobile (width < 768px), clicking logo toggles menu instead of navigating home
@@ -56,8 +56,8 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
                     key={item.href}
                     href={item.href}
                     className={`flex items-center gap-2 px-3 py-1.5 border-2 transition-all font-bold text-xs uppercase tracking-wider ${isActive
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-[2px_2px_0px_0px_rgba(16,185,129,0.5)]'
-                        : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50 border-transparent'
+                      ? 'bg-slate-900 text-white border-slate-900 shadow-[2px_2px_0px_0px_rgba(16,185,129,0.5)]'
+                      : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50 border-transparent'
                       }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -87,25 +87,26 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
               <LogOut className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Sign Out</span>
             </button>
-          {/* Menu Mobile */}
-          <div className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:hidden w-full items-center gap-2 overflow-x-auto pb-1 order-3 no-scrollbar border-t-2 border-slate-100 pt-2 transition-all`}>
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex shrink-0 items-center gap-2 px-3 py-1.5 border-2 transition-all font-bold text-[10px] uppercase tracking-wider ${isActive
+            {/* Menu Mobile */}
+            <div className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:hidden w-full items-center gap-2 overflow-x-auto pb-1 order-3 no-scrollbar border-t-2 border-slate-100 pt-2 transition-all`}>
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex shrink-0 items-center gap-2 px-3 py-1.5 border-2 transition-all font-bold text-[10px] uppercase tracking-wider ${isActive
                       ? 'bg-slate-900 text-white border-slate-900'
                       : 'text-slate-700 bg-slate-50 border-slate-200'
-                    }`}
-                >
-                  <Icon className="w-3 h-3" />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
+                      }`}
+                  >
+                    <Icon className="w-3 h-3" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
