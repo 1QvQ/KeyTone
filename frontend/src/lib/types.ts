@@ -3,6 +3,10 @@ export interface User {
   username: string;
   email: string;
   avatar_url: string | null;
+  full_name?: string | null;
+  bio?: string | null;
+  interests?: string[];
+  preferred_sound?: string | null;
 }
 
 export interface SoundTag {

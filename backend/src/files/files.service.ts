@@ -147,6 +147,58 @@ export class FilesService {
     });
   }
 
+  async uploadAvatar(userId: string, file: Express.Multer.File): Promise<string> {
+    if (!file) {
+      throw new BadRequestException('No avatar file provided');
+    }
+
+    const fileExt = path.extname(file.originalname).toLowerCase();
+    const uniqueFilename = `${userId}-${Date.now()}${fileExt}`;
+    let avatarUrl = '';
+
+    // Prioritize Supabase Storage
+    if (this.isSupabase) {
+      try {
+        avatarUrl = await this.uploadToSupabase(
+          `avatars/${uniqueFilename}`,
+          file.buffer,
+          file.mimetype,
+        );
+      } catch (err) {
+        console.error('Supabase upload failed, falling back:', err);
+      }
+    }
+
+    // Fallback to Azure Blob Storage
+    if (!avatarUrl && this.isAzure && this.containerClient) {
+      const blobName = `avatars/${uniqueFilename}`;
+      const blockBlobClient = this.containerClient.getBlockBlobClient(blobName);
+      await blockBlobClient.upload(file.buffer, file.size, {
+        blobHTTPHeaders: { blobContentType: file.mimetype },
+      });
+      avatarUrl = blockBlobClient.url;
+    }
+
+    // Fallback to local async storage
+    if (!avatarUrl) {
+      const dirPath = path.join(this.uploadDir, 'avatars');
+      if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
+      }
+      const destinationPath = path.join(dirPath, uniqueFilename);
+      await fs.promises.writeFile(destinationPath, file.buffer);
+      avatarUrl = `/uploads/avatars/${uniqueFilename}`;
+    }
+
+    // Update user's avatar in db
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { avatar_url: avatarUrl },
+    });
+
+    return avatarUrl;
+  }
+
   async saveAudio(
     setupId: string,
     file: Express.Multer.File,

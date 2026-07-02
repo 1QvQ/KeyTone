@@ -7,13 +7,17 @@ generator client {
 }
 
 model User {
-  id            String     @id @default(uuid())
-  username      String
-  email         String     @unique
-  password_hash String
-  avatar_url    String?
-  created_at    DateTime   @default(now())
-  keyboards     Keyboard[]
+  id              String     @id @default(uuid())
+  username        String
+  email           String     @unique
+  password_hash   String
+  full_name       String?
+  bio             String?
+  interests       String[]
+  preferred_sound String?
+  avatar_url      String?
+  created_at      DateTime   @default(now())
+  keyboards       Keyboard[]
 
   @@map("users")
 }
