@@ -30,7 +30,7 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
             {/* Desktop Logo Link */}
             <Link
               href="/"
-              className="hidden md:flex items-center gap-2.5 group"
+              className="hidden lg:flex items-center gap-2.5 group"
             >
               <div className="w-8 h-8 bg-white flex items-center justify-center border-2 border-slate-900 group-hover:bg-emerald-500 transition-all shadow-[2px_2px_0px_0px_rgba(18,18,18,1)]">
                 <KeySwitchIcon className="w-4.5 h-4.5" />
@@ -43,7 +43,7 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
             {/* Mobile Logo Toggle Button (Prevents routing bug) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex md:hidden items-center gap-2.5 group cursor-pointer bg-transparent border-none p-0 outline-none text-left"
+              className="flex lg:hidden items-center gap-2.5 group cursor-pointer bg-transparent border-none p-0 outline-none text-left"
             >
               <div className="w-8 h-8 bg-white flex items-center justify-center border-2 border-slate-900 group-hover:bg-emerald-500 transition-all shadow-[2px_2px_0px_0px_rgba(18,18,18,1)]">
                 <KeySwitchIcon className="w-4.5 h-4.5" />
@@ -54,7 +54,7 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
             </button>
 
             {/* Menu Desktop */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = pathname === item.href;
@@ -97,7 +97,7 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
           </div>
 
           {/* Menu Mobile */}
-          <div className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:hidden w-full items-center gap-2 overflow-x-auto pb-1 order-3 no-scrollbar border-t-2 border-slate-100 pt-2 transition-all`}>
+          <div className={`${isMobileMenuOpen ? 'flex' : 'hidden'} lg:hidden w-full items-center gap-2 overflow-x-auto pb-1 order-3 no-scrollbar border-t-2 border-slate-100 pt-2 transition-all`}>
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
