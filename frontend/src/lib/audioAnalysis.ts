@@ -16,7 +16,10 @@ export async function analyzeAudioFile(file: File): Promise<AcousticAnalysisResu
     
     // We use a regular AudioContext but do not connect it to the destination (speakers).
     // This allows us to silently process the audio.
-    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    interface WindowWithAudio extends Window {
+      webkitAudioContext?: typeof AudioContext;
+    }
+    const AudioCtx = window.AudioContext || (window as unknown as WindowWithAudio).webkitAudioContext;
     if (!AudioCtx) {
       console.warn("Web Audio API not supported in this browser.");
       return null;

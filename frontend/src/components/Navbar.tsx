@@ -26,11 +26,6 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
     <nav className="bg-white border-b-2 border-slate-900 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between py-3 sm:py-0 sm:h-16 gap-y-3">
-          {/* Logo */}
-<<<<<<< Updated upstream
-          <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-2.5 group">
-=======
           <div className="flex items-center gap-8 order-1">
             <Link 
               href="/" 
@@ -43,7 +38,6 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
                 }
               }}
             >
->>>>>>> Stashed changes
               <div className="w-8 h-8 bg-white flex items-center justify-center border-2 border-slate-900 group-hover:bg-emerald-500 transition-all shadow-[2px_2px_0px_0px_rgba(18,18,18,1)]">
                 <KeySwitchIcon className="w-4.5 h-4.5" />
               </div>
@@ -93,10 +87,6 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
               <LogOut className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Sign Out</span>
             </button>
-          </div>
-<<<<<<< Updated upstream
-=======
-
           {/* Menu Mobile */}
           <div className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:hidden w-full items-center gap-2 overflow-x-auto pb-1 order-3 no-scrollbar border-t-2 border-slate-100 pt-2 transition-all`}>
             {navItems.map((item) => {
@@ -117,7 +107,6 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
               );
             })}
           </div>
->>>>>>> Stashed changes
         </div>
       </div>
     </nav>

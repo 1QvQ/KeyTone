@@ -16,7 +16,7 @@ interface WavePlayerProps {
   onDelete?: () => void;
 }
 
-export default function WavePlayer({ url, filename, duration, format, size, acousticProfile, dominantFreq, onDelete }: WavePlayerProps) {
+export default function WavePlayer({ url, format, size, acousticProfile, dominantFreq, onDelete }: WavePlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const wavesurferRef = useRef<WaveSurfer | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
