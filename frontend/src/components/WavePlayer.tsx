@@ -147,7 +147,7 @@ export default function WavePlayer({ url, filename, duration, format, size, acou
 
           {/* Acoustic Analysis Bar */}
           {dominantFreq && (
-            <div className="flex flex-col gap-1 mt-1">
+            <div className="hidden sm:flex flex-col gap-1 mt-1">
               <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase tracking-widest">
                 <span>Thocky</span>
                 <span>Creamy</span>
