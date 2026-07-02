@@ -27,16 +27,10 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between py-3 sm:py-0 sm:h-16 gap-y-3">
           <div className="flex items-center gap-8 order-1">
+            {/* Desktop Logo Link */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 group"
-              onClick={(e) => {
-                // On mobile (width < 768px), clicking logo toggles menu instead of navigating home
-                if (window.innerWidth < 768) {
-                  e.preventDefault();
-                  setIsMobileMenuOpen(!isMobileMenuOpen);
-                }
-              }}
+              className="hidden md:flex items-center gap-2.5 group"
             >
               <div className="w-8 h-8 bg-white flex items-center justify-center border-2 border-slate-900 group-hover:bg-emerald-500 transition-all shadow-[2px_2px_0px_0px_rgba(18,18,18,1)]">
                 <KeySwitchIcon className="w-4.5 h-4.5" />
@@ -45,6 +39,19 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
                 KeyTone
               </span>
             </Link>
+
+            {/* Mobile Logo Toggle Button (Prevents routing bug) */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="flex md:hidden items-center gap-2.5 group cursor-pointer bg-transparent border-none p-0 outline-none text-left"
+            >
+              <div className="w-8 h-8 bg-white flex items-center justify-center border-2 border-slate-900 group-hover:bg-emerald-500 transition-all shadow-[2px_2px_0px_0px_rgba(18,18,18,1)]">
+                <KeySwitchIcon className="w-4.5 h-4.5" />
+              </div>
+              <span className="text-lg font-pixel tracking-wide text-slate-900 group-hover:text-emerald-600 transition-colors uppercase">
+                KeyTone
+              </span>
+            </button>
 
             {/* Menu Desktop */}
             <div className="hidden md:flex items-center gap-2">
@@ -87,26 +94,27 @@ export default function Navbar({ user, onLogout }: NavbarProps) {
               <LogOut className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Sign Out</span>
             </button>
-            {/* Menu Mobile */}
-            <div className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:hidden w-full items-center gap-2 overflow-x-auto pb-1 order-3 no-scrollbar border-t-2 border-slate-100 pt-2 transition-all`}>
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = pathname === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex shrink-0 items-center gap-2 px-3 py-1.5 border-2 transition-all font-bold text-[10px] uppercase tracking-wider ${isActive
-                      ? 'bg-slate-900 text-white border-slate-900'
-                      : 'text-slate-700 bg-slate-50 border-slate-200'
-                      }`}
-                  >
-                    <Icon className="w-3 h-3" />
-                    <span>{item.label}</span>
-                  </Link>
-                );
-              })}
-            </div>
+          </div>
+
+          {/* Menu Mobile */}
+          <div className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:hidden w-full items-center gap-2 overflow-x-auto pb-1 order-3 no-scrollbar border-t-2 border-slate-100 pt-2 transition-all`}>
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex shrink-0 items-center gap-2 px-3 py-1.5 border-2 transition-all font-bold text-[10px] uppercase tracking-wider ${isActive
+                    ? 'bg-slate-900 text-white border-slate-900'
+                    : 'text-slate-700 bg-slate-50 border-slate-200'
+                    }`}
+                >
+                  <Icon className="w-3 h-3" />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
